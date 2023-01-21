@@ -9,7 +9,7 @@ export default async function (req: any, res: any) {
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
-        message: "OpenAIのAPIキーが読み取れません",
+        message: "OpenAI APIキーが正しくありません",
       }
     });
     return;
@@ -19,7 +19,7 @@ export default async function (req: any, res: any) {
   if (problem.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: "課題を入力されていません",
+        message: "課題を入力してください",
       }
     });
     return;
@@ -28,7 +28,8 @@ export default async function (req: any, res: any) {
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: `${problem}を解決する課題を教えてください`,
+      max_tokens: 4000,
+      prompt: `${problem}を解決するアイデアを3つ教えてください`,
       temperature: 0.6,
     });
     res.status(200).json({ result: completion.data.choices[0].text });
@@ -41,7 +42,7 @@ export default async function (req: any, res: any) {
       console.error(`Error with OpenAI API request: ${error.message}`);
       res.status(500).json({
         error: {
-          message: 'OpenAI APIの呼び出しに失敗しました',
+          message: 'OpenAI APIを呼び出せませんでした',
         }
       });
     }

@@ -5,7 +5,11 @@ import styles from '@/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
 import { Button } from '@mantine/core';
+import { useState } from 'react'
+
 export default function Home() {
+  const [response, setResponse] = useState('レスポンスメッセージ')
+  
   async function onSubmit(event: any) {
     event.preventDefault();
     try {
@@ -22,6 +26,7 @@ export default function Home() {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
+      setResponse(data.result)
       console.log(data.result)
     } catch(error: any) {
       // Consider implementing your own error handling logic here
@@ -35,6 +40,7 @@ export default function Home() {
     <Button onClick={onSubmit} variant="outline" color="teal" size="md">
       Settings
     </Button>
+    {response}
     </>
   )
 }
