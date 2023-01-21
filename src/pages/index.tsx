@@ -8,8 +8,8 @@ import { Button } from '@mantine/core';
 import { useState } from 'react'
 
 export default function Home() {
-  const [response, setResponse] = useState('レスポンスメッセージ')
-  
+  const [response, setResponse] = useState([])
+
   async function onSubmit(event: any) {
     event.preventDefault();
     try {
@@ -27,7 +27,8 @@ export default function Home() {
       }
 
       setResponse(data.result)
-      console.log(data.result)
+      console.log(JSON.parse(data.result))
+      setResponse(JSON.parse(data.result))
     } catch(error: any) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -40,7 +41,11 @@ export default function Home() {
     <Button onClick={onSubmit} variant="outline" color="teal" size="md">
       Settings
     </Button>
-    {response}
+    {/* {response.map((test) => {
+      return (
+          <p>{test}</p>
+      );
+    })} */}
     </>
   )
 }

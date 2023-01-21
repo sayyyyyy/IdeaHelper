@@ -29,7 +29,7 @@ export default async function (req: any, res: any) {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
       max_tokens: 4000,
-      prompt: `${problem}を解決するアイデアを3つ教えてください`,
+      prompt: `${problem}を解決するアイデアをjson形式で3つ渡してください`,
       temperature: 0.6,
     });
     res.status(200).json({ result: completion.data.choices[0].text });
