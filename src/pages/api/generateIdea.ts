@@ -1,11 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
-
 import { callOpenAI } from "@/scripts/callOpenAI";
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
 
 export default async function (req: any, res: any) {
   const problem = req.body.problem || '';
@@ -19,7 +12,7 @@ export default async function (req: any, res: any) {
   }
 
   try {
-    const completion = await callOpenAI(`${problem}を解決するアイデアを{{'idea': value}, {'idea': value}, {'idea': value}}形式のjsonで3つ渡してください`)
+    const completion = await callOpenAI(`${problem}を解決するアプリのアイデアを{{'idea': value}, {'idea': value}, {'idea': value}}形式のjsonで3つ渡してください`)
     if (!completion) {
       res.status(500).json({
         error: {
