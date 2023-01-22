@@ -14,7 +14,7 @@ export default function Home() {
     let errorCount = 0
     event.preventDefault();
     try {
-      const response = await fetch("/api/callOpenAI", {
+      const response = await fetch("/api/generateIdea", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export default function Home() {
     </Button>
     {
       ideaList.map((idea) =>
-        <p>{idea}</p>
+        <p key={idea}>{idea}</p>
       )
     }
     </>
