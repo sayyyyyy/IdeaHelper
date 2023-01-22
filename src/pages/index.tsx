@@ -8,9 +8,10 @@ import { Button } from '@mantine/core';
 import { useState } from 'react'
 
 export default function Home() {
-  const [response, setResponse] = useState([])
+  const [ideaList, setIdeaList] = useState([])
 
   async function onSubmit(event: any) {
+    let errorCount = 0
     event.preventDefault();
     try {
       const response = await fetch("/api/callOpenAI", {
@@ -26,13 +27,26 @@ export default function Home() {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
-      setResponse(data.result)
-      console.log(JSON.parse(data.result))
-      setResponse(JSON.parse(data.result))
+      
+      console.log(data.result)
+
+      // 取得データの整形
+      const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '').split(',')
+      const changeArray = []
+
+      for (const formatIdea of formatIdeaList) {
+
+        changeArray.push(JSON.parse(formatIdea).idea)
+      }
+      
+      setIdeaList(changeArray)
+      console.log(ideaList)
     } catch(error: any) {
+      errorCount++
+      onSubmit(event)
+
       // Consider implementing your own error handling logic here
       console.error(error);
-      alert(error.message);
     }
   }
 
@@ -41,11 +55,11 @@ export default function Home() {
     <Button onClick={onSubmit} variant="outline" color="teal" size="md">
       Settings
     </Button>
-    {/* {response.map((test) => {
-      return (
-          <p>{test}</p>
-      );
-    })} */}
+    {
+      ideaList.map((idea) =>
+        <p>{idea}</p>
+      )
+    }
     </>
   )
 }
