@@ -21,14 +21,13 @@ export default function ChatTest() {
           if (response.status !== 200) {
             console.log(data.error)
             return
-            throw data.error || new Error(`Request failed with status ${response.status}`);
           }
           
           console.log(data.result)
     
           // 取得データの整形
           
-          setChatList([{'user': question}, {'openai': data.result}])
+          setChatList([...chatList, {'user': question}, {'openai': data.result}])
           console.log(chatList)
         } catch(error: any) {
           sendChat(event)

@@ -26,10 +26,8 @@ export default function Home() {
       if (response.status !== 200) {
         console.log(data.error)
         return 
-        throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
-      
       console.log(data.result)
 
       // 取得データの整形
@@ -37,7 +35,6 @@ export default function Home() {
       const changeArray = []
 
       for (const formatIdea of formatIdeaList) {
-
         changeArray.push(JSON.parse(formatIdea).idea)
       }
       
@@ -47,7 +44,6 @@ export default function Home() {
       errorCount++
       onSubmit(event)
 
-      // Consider implementing your own error handling logic here
       console.error(error);
     }
   }
