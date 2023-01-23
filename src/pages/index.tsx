@@ -14,7 +14,7 @@ export default function Home() {
     let errorCount = 0
     event.preventDefault();
     try {
-      const response = await fetch("/api/callOpenAI", {
+      const response = await fetch("/api/generateIdea", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,10 +24,10 @@ export default function Home() {
 
       const data = await response.json();
       if (response.status !== 200) {
-        throw data.error || new Error(`Request failed with status ${response.status}`);
+        console.log(data.error)
+        return 
       }
 
-      
       console.log(data.result)
 
       // 取得データの整形
@@ -35,7 +35,6 @@ export default function Home() {
       const changeArray = []
 
       for (const formatIdea of formatIdeaList) {
-
         changeArray.push(JSON.parse(formatIdea).idea)
       }
       
@@ -45,7 +44,6 @@ export default function Home() {
       errorCount++
       onSubmit(event)
 
-      // Consider implementing your own error handling logic here
       console.error(error);
     }
   }
@@ -57,7 +55,7 @@ export default function Home() {
     </Button>
     {
       ideaList.map((idea) =>
-        <p>{idea}</p>
+        <p key={idea}>{idea}</p>
       )
     }
     </>
