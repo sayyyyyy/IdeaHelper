@@ -1,9 +1,7 @@
 import React from 'react'
 
-const Document = () => {
+export default function Document() {
     return (
         <h1>ドキュメント化</h1>
     )
 }
-
-export default Document
