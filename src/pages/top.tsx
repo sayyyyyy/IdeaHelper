@@ -7,20 +7,32 @@ import { useState } from 'react';
 const inter = Inter({ subsets: ['latin'] })
 import { Stepper, Button, Group } from '@mantine/core';
 import { useRouter } from "next/router";
+
+import { useDispatch, useSelector } from "react-redux";
+import { counterSlice, CounterState, store,selectCount } from "./_app";
+// import { decrease,increase } from '../redux/activeSlice';
+// import { useSelector } from '../redux/store'
+
 // import Sidebar from '../components/sidebar'
 
 export default function Top() {
+    const dispatch = useDispatch();
+    const selector = useSelector(selectCount);
+    const { increment,decrement } = counterSlice.actions;
+
     const router = useRouter()
-    const [active, setActive] = useState(0);
-    const nextStep = () => {
-        setActive((current) => (current < 3 ? current + 1 : current))
-        router.push('/solve')
-    };
-    const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
+    // const [active, setActive] = useState(0);
+    // const nextStep = () => {
+    //     setActive(selector)
+    //     // router.push('/solve')
+    // };
+    // const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
     const [text,setText] = useState("")
+   
+    
     return (
     <>
-        <Stepper color="yellow" active={active} onStepClick={setActive} breakpoint="sm">
+        <Stepper color="yellow" active={selector} onStepClick={selector} breakpoint="sm">
             <Stepper.Step label="First step" description="Create an account">
                 Step 1 content: Create an account
             </Stepper.Step>
@@ -41,11 +53,16 @@ export default function Top() {
         </div>
 
         <Group position="center" mt="xl">
-            <Button variant="default" onClick={prevStep}>Back</Button>
-            <Button variant="outline" color="yellow" size="md" onClick={nextStep}>
+            <Button variant="default" onClick={() => {dispatch(increment());}}>
+                Back
+            </Button>
+            <Button variant="outline" color="yellow" size="md" onClick={() => {dispatch(decrement());router.push('/chat')}}>
               解決策の提案
             </Button>
         </Group>
+        {/* <h1>Count: {count}</h1>
+      <button onClick={() => dispatch(decrease())}>Down</button>
+      <button onClick={() => dispatch(increase())}>Up</button> */}
     {/* <Sidebar /> */}
     </>
   )
