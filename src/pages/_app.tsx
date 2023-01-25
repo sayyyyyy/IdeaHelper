@@ -3,6 +3,7 @@ import { AppProps } from 'next/app';
 import { MantineProvider } from '@mantine/core';
 import { Provider } from 'react-redux';
 import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { AppShell,Navbar, Footer, Header,Text,Stepper, Button, Group } from '@mantine/core';
 
 
 export type CounterState = {
@@ -56,7 +57,9 @@ export default function App(props: AppProps) {
             colorScheme: 'light',
           }}
         >
+        <AppShell navbar={<Navbar width={{base:200}}>幅設定ほぼ必須.型は後述</Navbar>} >
           <Component {...pageProps} />
+        </AppShell>
         </MantineProvider>
       </Provider>
     </>

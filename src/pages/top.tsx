@@ -5,7 +5,7 @@ import styles from '@/styles/Home.module.css'
 import { useState } from 'react';
 
 const inter = Inter({ subsets: ['latin'] })
-import { Stepper, Button, Group } from '@mantine/core';
+import { AppShell,Stepper, Button, Group } from '@mantine/core';
 import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -32,6 +32,7 @@ export default function Top() {
     
     return (
     <>
+    
         <Stepper color="yellow" active={selector} onStepClick={selector} breakpoint="sm">
             <Stepper.Step label="First step" description="Create an account">
                 Step 1 content: Create an account
