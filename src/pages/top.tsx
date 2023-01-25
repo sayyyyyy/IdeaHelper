@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
 import { counterSlice, CounterState, store,selectCount } from "./_app";
+import Stepbar from '@/components/stepbar';
 // import { decrease,increase } from '../redux/activeSlice';
 // import { useSelector } from '../redux/store'
 
@@ -32,22 +33,8 @@ export default function Top() {
     
     return (
     <>
-    
-        <Stepper color="yellow" active={selector} onStepClick={selector} breakpoint="sm">
-            <Stepper.Step label="First step" description="Create an account">
-                Step 1 content: Create an account
-            </Stepper.Step>
-            <Stepper.Step label="Second step" description="Verify email">
-                Step 2 content: Verify email
-            </Stepper.Step>
-            <Stepper.Step label="Final step" description="Get full access">
-                Step 3 content: Get full access
-            </Stepper.Step>
-            <Stepper.Completed>
-                Completed, click back button to get to previous step
-            </Stepper.Completed>
-        </Stepper>
 
+        <Stepbar />
         <h1 className ="flex justify-center">あなたが解決したい課題はなんですか？</h1>
         <div className="flex justify-center">
             <input className=" mt-3 shadow appearance-none border rounded h-14 w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" value={text} onChange={(event)=>setText(event.target.value)}/>

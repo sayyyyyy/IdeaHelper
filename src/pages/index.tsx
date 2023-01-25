@@ -50,14 +50,14 @@ export default function Home() {
 
   return (
     <>
-    <Button onClick={onSubmit} variant="outline" color="teal" size="md">
-      Settings
-    </Button>
-    {
-      ideaList.map((idea) =>
-        <p key={idea}>{idea}</p>
-      )
-    }
+      <Button onClick={onSubmit} variant="outline" color="teal" size="md">
+        Settings
+      </Button>
+      {
+        ideaList.map((idea) =>
+          <p key={idea}>{idea}</p>
+        )
+      }
     </>
   )
 }

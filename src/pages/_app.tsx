@@ -57,9 +57,13 @@ export default function App(props: AppProps) {
             colorScheme: 'light',
           }}
         >
-        <AppShell navbar={<Navbar width={{base:200}}>幅設定ほぼ必須.型は後述</Navbar>} >
-          <Component {...pageProps} />
-        </AppShell>
+          <AppShell navbar={
+            <Navbar width={{base:200}}>
+              <Navbar.Section  mt="md">幅設定ほぼ必須.型は後述</Navbar.Section>
+              <Navbar.Section  mt="md">幅設定ほぼ必須.型は後述</Navbar.Section>
+            </Navbar>} >
+            <Component {...pageProps} />
+          </AppShell>
         </MantineProvider>
       </Provider>
     </>
