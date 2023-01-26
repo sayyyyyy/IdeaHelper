@@ -49,6 +49,8 @@ export default function Home() {
        
       setIdeaList(changeArray)
       console.log(ideaList)
+      dispatch(increment())
+
     } catch(error: any) {
       errorCount++
       onSubmit(event)
@@ -66,7 +68,7 @@ export default function Home() {
         </div>
 
         <Group position="center" mt="xl">
-            <Button variant="default" onClick={() => {dispatch(increment());}}>
+            <Button variant="default" onClick={() => {dispatch(decrement());}}>
                 Back
             </Button>
             {/* <Button variant="outline" color="yellow" size="md" onClick={() => {dispatch(decrement());router.push('/chat')}}>

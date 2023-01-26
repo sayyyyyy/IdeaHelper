@@ -10,13 +10,13 @@ export type CounterState = {
     name: "counter",
     initialState,
     reducers: {
-      decrement(state) {
+      increment(state) {
         if(state.value < 3){
           state.value++;
         } 
         console.log(state.value)
-      },
-      increment(state) {
+      }, 
+      decrement(state){
         if(state.value > 0){
           state.value--;
         } 
