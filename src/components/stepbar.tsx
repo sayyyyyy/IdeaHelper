@@ -1,8 +1,8 @@
 import { Stepper, Button, Group } from '@mantine/core';
 import {useState} from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { counterSlice, CounterState, store,selectCount } from "../pages/_app";
-
+// import { counterSlice, CounterState, store,selectCount } from "../pages/_app";
+import {counterSlice, CounterState, selectCount} from '../redux/counterSlice'
 const Stepbar = () => {
         // const [active, setActive] = useState(1);
         // const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));

@@ -4,11 +4,20 @@ import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
-import { Button } from '@mantine/core';
 import { useState } from 'react'
+import { useDispatch, useSelector } from "react-redux";
+import Stepbar from '@/components/stepbar'
+import { AppShell,Stepper, Button, Group } from '@mantine/core';
+// import { counterSlice, CounterState, store,selectCount, ideaSlice, selectIdea} from "./_app";
+import { counterSlice } from "../redux/counterSlice";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [ideaList, setIdeaList] = useState([])
+  const dispatch = useDispatch();
+  const { increment,decrement } = counterSlice.actions;
+  const [text,setText] = useState("")
+  const router = useRouter()
 
   async function onSubmit(event: any) {
     let errorCount = 0
@@ -19,7 +28,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ problem : '温暖化' }),
+        body: JSON.stringify({ problem : text }),
       });
 
       const data = await response.json();
@@ -37,7 +46,7 @@ export default function Home() {
       for (const formatIdea of formatIdeaList) {
         changeArray.push(JSON.parse(formatIdea).idea)
       }
-      
+       
       setIdeaList(changeArray)
       console.log(ideaList)
     } catch(error: any) {
@@ -50,9 +59,23 @@ export default function Home() {
 
   return (
     <>
-      <Button onClick={onSubmit} variant="outline" color="teal" size="md">
-        Settings
-      </Button>
+      <Stepbar />
+        <h1 className ="flex justify-center">あなたが解決したい課題はなんですか？</h1>
+        <div className="flex justify-center">
+            <input className=" mt-3 shadow appearance-none border rounded h-14 w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" value={text} onChange={(event)=>setText(event.target.value)}/>
+        </div>
+
+        <Group position="center" mt="xl">
+            <Button variant="default" onClick={() => {dispatch(increment());}}>
+                Back
+            </Button>
+            {/* <Button variant="outline" color="yellow" size="md" onClick={() => {dispatch(decrement());router.push('/chat')}}>
+              解決策の提案
+            </Button> */}
+            <Button onClick={onSubmit} variant="outline" color="yellow" size="md">
+              解決策の提案
+            </Button>
+        </Group>
       {
         ideaList.map((idea) =>
           <p key={idea}>{idea}</p>
