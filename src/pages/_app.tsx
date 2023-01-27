@@ -25,11 +25,15 @@ export default function App(props: AppProps) {
             colorScheme: 'light',
           }}
         >
-          <AppShell navbar={
-            <Navbar width={{base:200}} >
+          <AppShell padding="md" 
+            navbar={
+              <Navbar width={{base:200}} >
+              <Navbar.Section  mt="md" >IdeaHelper</Navbar.Section>
+              <hr />
               <Navbar.Section  mt="md">幅設定ほぼ必須.型は後述</Navbar.Section>
-              <Navbar.Section  mt="md">幅設定ほぼ必須.型は後述</Navbar.Section>
-            </Navbar>} >
+              </Navbar>
+            } 
+          >
             <Component {...pageProps} />
           </AppShell>
         </MantineProvider>

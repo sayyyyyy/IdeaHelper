@@ -14,18 +14,16 @@ const Stepbar = () => {
         return (
             <>
               <Stepper color="yellow" active={selector} onStepClick={selector} breakpoint="sm">
-                  <Stepper.Step label="First step" description="Create an account">
-                    Step 1 content: Create an account
+                  <Stepper.Step label="課題">
                   </Stepper.Step>
-                  <Stepper.Step label="Second step" description="Verify email">
-                    Step 2 content: Verify email
+                  <Stepper.Step label="解決策の提案" >
                   </Stepper.Step>
-                  <Stepper.Step label="Final step" description="Get full access">
-                    Step 3 content: Get full access
+                  <Stepper.Step label="ドキュメント化" >
+                    
                   </Stepper.Step>
-                  <Stepper.Completed>
+                  {/* <Stepper.Completed>
                     Completed, click back button to get to previous step
-                  </Stepper.Completed>
+                  </Stepper.Completed> */}
               </Stepper>
               </>
             )

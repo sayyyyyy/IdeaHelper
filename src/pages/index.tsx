@@ -58,21 +58,23 @@ export default function Home() {
        
       // setIdeaList(changeArray)
       console.log(ideaList)
-      dispatch(increment())
-      router.push("/solve");
-
     } catch(error: any) {
       errorCount++
       onSubmit(event)
 
       console.error(error);
+    } finally {
+      dispatch(increment())
+      router.push("/solve");
     }
   }
 
   return (
     <>
       <Stepbar />
-        <h1 className ="flex justify-center">あなたが解決したい課題はなんですか？</h1>
+
+        <br />
+        <h1 className ="flex justify-center">あなたが解決したい課題を教えてください</h1>
         <div className="flex justify-center">
             <input className=" mt-3 shadow appearance-none border rounded h-14 w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" value={text} onChange={(event)=>setText(event.target.value)}/>
         </div>
