@@ -2,11 +2,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
+import Stepbar from '@/components/stepbar'
 
 const inter = Inter({ subsets: ['latin'] })
 import { Button } from '@mantine/core';
 import { useDispatch, useSelector } from "react-redux";
-import { counterSlice, CounterState, store,selectCount } from "./_app";
+import { counterSlice, CounterState, selectCount } from "../redux/counterSlice";
 
 export default function solve() {
   const dispatch = useDispatch();
@@ -15,6 +16,8 @@ export default function solve() {
 
   return (
     <>
+    <Stepbar ></Stepbar>
+
       <Button variant="outline" color="teal" size="md">
         Settings
       </Button>

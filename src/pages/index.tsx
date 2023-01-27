@@ -11,7 +11,7 @@ import { AppShell,Stepper, Button, Group } from '@mantine/core';
 // import { counterSlice, CounterState, store,selectCount, ideaSlice, selectIdea} from "./_app";
 import { counterSlice } from "../redux/counterSlice";
 import { selectIdeaList, setIdeaList } from "../redux/idealistSlice";
-
+import { selectTitleList,addTitleList } from '@/redux/titleListSlice'
 import { useRouter } from "next/router";
 
 export default function Home() {
@@ -21,8 +21,10 @@ export default function Home() {
   const [text,setText] = useState("")
   const router = useRouter()
   const ideaList = useSelector(selectIdeaList);
+  const TitleList = useSelector(selectTitleList);
 
   async function onSubmit(event: any) {
+    dispatch(addTitleList(text))
     let errorCount = 0
     event.preventDefault();
     try {
@@ -57,6 +59,7 @@ export default function Home() {
       // setIdeaList(changeArray)
       console.log(ideaList)
       dispatch(increment())
+      router.push("/solve");
 
     } catch(error: any) {
       errorCount++
@@ -85,12 +88,13 @@ export default function Home() {
               解決策の提案
             </Button>
         </Group>
-      {/* {
-        ideaList.map((idea) =>
+      {
+        ideaList.map((idea:any) =>
           <p key={idea}>{idea}</p>
         )
-      } */}
-      <div>Generation is {ideaList}</div>
+      }
+      {TitleList}
+    
     </>
   )
 }

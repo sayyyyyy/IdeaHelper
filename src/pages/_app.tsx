@@ -7,48 +7,6 @@ import { AppShell,Navbar, Footer, Header,Text,Stepper, Button, Group } from '@ma
 import { store } from '@/redux/store';
 
 
-// export type CounterState = {
-//   value: number;
-// };
-// // 初期値の定義
-// const initialState: CounterState = { value: 0 };
-
-// export const counterSlice = createSlice({
-//   name: "counter",
-//   initialState,
-//   reducers: {
-//     decrement(state) {
-//       if(state.value < 3){
-//         state.value++;
-//       } 
-//       console.log(state.value)
-//     },
-//     increment(state) {
-//       if(state.value > 0){
-//         state.value--;
-//       } 
-//       console.log(state.value)
-//     },
-//   },
-// });
-
-// export const ideaSlice = createSlice({
-//   name: "ideaList",
-//   initialState:[],
-//   reducers: {},
-// });
-
-
-// export const store = configureStore({
-//   reducer: {
-//     counter: counterSlice.reducer,
-//     ideaList: counterSlice.reducer,
-//   },
-// });
-
-// export const selectCount = (state: any) => {return state.counter.value};
-// export const selectIdea = (state: any) => {return state.ideaList.value};
-
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
   return (
