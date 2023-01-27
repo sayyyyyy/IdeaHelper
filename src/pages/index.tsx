@@ -10,14 +10,17 @@ import Stepbar from '@/components/stepbar'
 import { AppShell,Stepper, Button, Group } from '@mantine/core';
 // import { counterSlice, CounterState, store,selectCount, ideaSlice, selectIdea} from "./_app";
 import { counterSlice } from "../redux/counterSlice";
+import { selectIdeaList, setIdeaList } from "../redux/idealistSlice";
+
 import { useRouter } from "next/router";
 
 export default function Home() {
-  const [ideaList, setIdeaList] = useState([])
+  // const [ideaList, setIdeaList] = useState([])
   const dispatch = useDispatch();
   const { increment,decrement } = counterSlice.actions;
   const [text,setText] = useState("")
   const router = useRouter()
+  const ideaList = useSelector(selectIdeaList);
 
   async function onSubmit(event: any) {
     let errorCount = 0
@@ -46,8 +49,12 @@ export default function Home() {
       for (const formatIdea of formatIdeaList) {
         changeArray.push(JSON.parse(formatIdea).idea)
       }
+
+      console.log(changeArray)
+
+      dispatch(setIdeaList(changeArray))
        
-      setIdeaList(changeArray)
+      // setIdeaList(changeArray)
       console.log(ideaList)
       dispatch(increment())
 
@@ -78,11 +85,12 @@ export default function Home() {
               解決策の提案
             </Button>
         </Group>
-      {
+      {/* {
         ideaList.map((idea) =>
           <p key={idea}>{idea}</p>
         )
-      }
+      } */}
+      <div>Generation is {ideaList}</div>
     </>
   )
 }
