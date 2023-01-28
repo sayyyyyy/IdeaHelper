@@ -9,19 +9,19 @@ export default function ChatTest() {
 
         event.preventDefault();
         try {
-          const response = await fetch("/api/sendChat", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ idea: idea, question : question }),
-          });
-    
-          const data = await response.json();
-          if (response.status !== 200) {
-            console.log(data.error)
-            return
-          }
+            const response = await fetch("/api/sendChat", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ idea: idea, question : question }),
+            });
+      
+            const data = await response.json();
+            if (response.status !== 200) {
+                console.log(data.error)
+                return
+            }
           
           console.log(data.result)
     
