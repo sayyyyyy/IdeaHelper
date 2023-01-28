@@ -2,24 +2,17 @@ import { useState } from "react";
 
 export default function DocumentTest() {
     const [document, setDocument] = useState([{}])
+	const idea = '低炭素社会への移行を促進するアプリ"'
 
     async function createDocument(event: any) {
-		const  idea = '低炭素社会への移行を促進するアプリ"'
-		const test = [
-			{user: 'ターゲットどうしよう'},
-			{openai: 'か ・全体の低炭素社会への移行を促進するアプリのターゲットとして、一般の大衆、企業、政府機関が挙げられます。 ・一般の大衆をターゲットとする場合、低炭素社会への移行を携わる行動を促すことが重要です。アプリを使用して、低炭素社会への貢献度を表示したり、低炭素社会への移行を促すキャンペーンを実施したりすることができます。 ・企業をターゲットとする場合、低炭素社会への移行を携わる行動を促すことが重要です。アプリを使用して、企業が低炭素社会への移行を行うための施策を実施したり、低炭素社会への移行を促すキャンペーンを実施したりすることができます。 ・政府機関をターゲットとする場合、低炭素社会への移行を携わる行動を促すことが重要です。アプリを使用して、政府が低炭素社会への移行を行うための施策を実施したり、低炭素社会への移行を促すキャンペーンを実施したりすることができます。'}
-		]
-		
 		const questionList = [
-			{question: `${idea}のアプリ名の提案して`, questionText: 'アプリ名案'},
-			{question: `${idea}のターゲットどうしよう`, questionText: 'ターゲット案'},
+			{question: `${idea}のアプリ名を正確な文章で提案してください。`, questionText: 'アプリ名案'},
+			{question: `${idea}のターゲットを正確な文章で提案してください。`, questionText: 'ターゲット案'},
 			// {question: `${idea}の機能一覧を教えて`, questionText: '機能一覧案'},
 			// {question: `${idea}の画面一覧を教えて`, questionText: '画面一覧案'},
 		]
     
 		event.preventDefault();
-		console.log(JSON.stringify(test).replace(/{|}|\[|\]/g, ""))
-		setDocument(test)
 		try {
 			const response = await fetch("/api/createDocument", {
 			method: "POST",
@@ -44,11 +37,23 @@ export default function DocumentTest() {
 			console.error(error);
 		}
 	}
+
+	const copyText = () => {
+		navigator.clipboard.writeText('あああ').then(
+			() => {
+			  console.log('コピーしました')
+			},
+			() => {
+			  console.log('コピーに失敗しました')
+			});
+	}
   
     return (
 		<>
 		<h2>Create Document</h2>
 		<button onClick={createDocument}>create</button>
+		<button onClick={copyText}>copy</button>
+		<p>{idea}</p>
 		{(() => {
 			if (document) {
 				return (
@@ -58,6 +63,7 @@ export default function DocumentTest() {
 							<p>{idea.answer}</p>
 						</>
 					))
+
 				)
 			}
 		})()}

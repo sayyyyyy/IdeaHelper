@@ -2,7 +2,6 @@ import { callOpenAI } from "@/scripts/callOpenAI";
 
 export default async function (req: any, res: any) {
     const content = req.body.questionList || '';
-    console.log(content)
     if (content.length === 0) {
         res.status(400).json({
         error: {
