@@ -17,6 +17,7 @@ export default async function (req: any, res: any) {
             const answer = await callOpenAI(question.question)
             answerList.push({question: question.questionText, answer: answer})
         }
+        console.log(answerList)
 
         res.status(200).json({ result: answerList });
     } catch(error: any) {
