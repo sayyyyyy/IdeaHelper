@@ -10,6 +10,9 @@ import { counterSlice, CounterState,selectCount } from "../redux/counterSlice";
 import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex  } from '@mantine/core';
 import {IconExternalLink } from '@tabler/icons';
 
+import { selectIdea } from '@/redux/ideaSlice';
+import { setChatList, selectChatList } from '@/redux/chatListSlice';
+
 export default function Top() {
     const dispatch = useDispatch();
     const selector = useSelector(selectCount);
@@ -18,17 +21,20 @@ export default function Top() {
     const router = useRouter()
     const [message,setMessage] = useState("")
 
-    const chatlog = []
-
-    const [chatList, setChatList] = useState([])
+    const idea = useSelector(selectIdea);
+    const chatList = useSelector(selectChatList)
 
     const moveBack=()=>{
       router.push("/solve")
     }
 
+    const moveDucumet=()=>{
+      dispatch(increment());
+      router.push("/document");
+    }
+
     async function sendChat(event: any) {
         const question = message
-        const idea = '低炭素社会への移行を促進するアプリ"'
 
         event.preventDefault();
         try {
@@ -49,9 +55,7 @@ export default function Top() {
           console.log(data.result)
     
           // 取得データの整形
-          
-          setChatList([...chatList, {'user': question}, {'openai': data.result}])
-          console.log(chatList)
+          dispatch(setChatList([...chatList, {'user': question}, {'openai': data.result}]))
         } catch(error: any) {
           sendChat(event)
           console.error(error);
@@ -61,11 +65,12 @@ export default function Top() {
     
     return (
     <>
+
     <div style={{position:"fixed" ,backgroundColor:"#FFFFFF",width:"100%",height:120 ,zIndex:1 ,marginTop:-20}}>
       <header style={{backgroundColor:"#FCC419",width:"86%",display:"flex",height:80,position:"fixed",zIndex:2,marginTop:20}}>
         <Center style={{width:"100%"}}>
           <Button variant="light" color="yellow" size="md" onClick={moveBack} style={{marginLeft: "-40%",marginRight:"40%"}}> ＜ </Button>
-          <h1 className='text-white font-bold ' >地球温暖化</h1>
+          <h1 className='text-white font-bold ' >{idea}</h1>
         </Center>
       </header>
     </div>
@@ -126,7 +131,9 @@ export default function Top() {
           onChange={(event) => setMessage(event.currentTarget.value)}
           />
           <Button variant="light" color="yellow.7" size="md" onClick={sendChat} style={{backgroundColor:"#FAB005",color:"white"}}>送信</Button>
+          <button onClick={moveDucumet}>ドキュメントへ</button>
       </Center>
+
     </>
   )
 }

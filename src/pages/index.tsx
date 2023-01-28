@@ -15,7 +15,6 @@ import { selectTitleList,addTitleList } from '@/redux/titleListSlice'
 import { useRouter } from "next/router";
 
 export default function Home() {
-  // const [ideaList, setIdeaList] = useState([])
   const dispatch = useDispatch();
   const { increment,decrement } = counterSlice.actions;
   const [text,setText] = useState("")
@@ -42,30 +41,22 @@ export default function Home() {
         return 
       }
 
-      console.log(data.result)
-
       // 取得データの整形
       const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '').split(',')
       const changeArray = []
-
       for (const formatIdea of formatIdeaList) {
         changeArray.push(JSON.parse(formatIdea).idea)
       }
 
-      console.log(changeArray)
-
       dispatch(setIdeaList(changeArray))
-       
-      // setIdeaList(changeArray)
-      console.log(ideaList)
+	  dispatch(increment())
+      router.push("/solve");
     } catch(error: any) {
       errorCount++
       onSubmit(event)
 
       console.error(error);
     } finally {
-      dispatch(increment())
-      router.push("/solve");
     }
   }
 
@@ -84,11 +75,6 @@ export default function Home() {
               解決策の提案
             </Button>
         </Group>
-      {
-        ideaList.map((idea:any) =>
-          <p key={idea}>{idea}</p>
-        )
-      }
     </>
   )
 }
