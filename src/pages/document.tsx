@@ -46,8 +46,9 @@ export default function Document() {
 			() => {
 			  console.log('コピーしました')
 			},
-			() => {
-			  console.log('コピーに失敗しました')
+			(e) => {
+                console.error(e)
+			    console.log('コピーに失敗しました')
 			});
 	}
 
@@ -103,7 +104,7 @@ export default function Document() {
     return (
         <>
             <h1>ドキュメント化</h1>
-            <button onClick={textchange}>生成する</button>
+            <button onClick={createDocument}>生成する</button>
             {(() => {
                 if (document.length !== 0) {
                     return (
@@ -119,25 +120,23 @@ export default function Document() {
             })()}
             {(() => {
                 if (chatList.length !== 0) {
-                    
                     return (
                         <>
                             <p>メモ</p>
-                            {
-                                
+                            {    
                                 chatList.map((chat: {[speaker: string]: string}) => (
                                 <>
                                     <span>{Object.keys(chat)[0]}</span>
                                     <span>{Object.values(chat)[0]}</span>
                                     <br />
                                 </>
-            ))}
+                            ))}
                         </>
                     )
                 }
             })()}
-            {/* <button onClick={copyText}>COPY</button>
-            <button onClick={copyTextToMarkdown}>Markdown Copy</button> */}
+            <button onClick={() => copyText(conversionToText())}>COPY</button>
+            <button onClick={() => copyText(conversionToMarkdownText())}>Markdown Copy</button>
         </>
     )
 }
