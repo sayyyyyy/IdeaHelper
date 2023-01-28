@@ -15,7 +15,6 @@ import { selectTitleList,addTitleList } from '@/redux/titleListSlice'
 import { useRouter } from "next/router";
 
 export default function Home() {
-  // const [ideaList, setIdeaList] = useState([])
   const dispatch = useDispatch();
   const { increment,decrement } = counterSlice.actions;
   const [text,setText] = useState("")
@@ -56,7 +55,6 @@ export default function Home() {
 
       dispatch(setIdeaList(changeArray))
        
-      // setIdeaList(changeArray)
       console.log(ideaList)
     } catch(error: any) {
       errorCount++
