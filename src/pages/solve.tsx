@@ -54,9 +54,9 @@ export default function solve() {
                     activities on and around the fjords of Norway */}
                   </Text>
                  
-                  <button value={idea} onClick={(e) => moveChat(e.target.value)}>
+                  <Button variant="light" color="yellow" fullWidth mt="md" radius="md" onClick={() => moveChat(idea)}>
                     もっと深ぼる
-                  </button>
+                  </Button>
                   <Button onClick={() => moveDucument(idea)} variant="filled" color="yellow" size="md">
                     ドキュメント化
                   </Button>
