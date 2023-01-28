@@ -41,29 +41,22 @@ export default function Home() {
         return 
       }
 
-      console.log(data.result)
-
       // 取得データの整形
       const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '').split(',')
       const changeArray = []
-
       for (const formatIdea of formatIdeaList) {
         changeArray.push(JSON.parse(formatIdea).idea)
       }
 
-      console.log(changeArray)
-
       dispatch(setIdeaList(changeArray))
-       
-      console.log(ideaList)
+	  dispatch(increment())
+      router.push("/solve");
     } catch(error: any) {
       errorCount++
       onSubmit(event)
 
       console.error(error);
     } finally {
-      dispatch(increment())
-      router.push("/solve");
     }
   }
 

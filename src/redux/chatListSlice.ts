@@ -15,4 +15,4 @@ export const chatListSlice = createSlice({
 //アクションの設定
 export const { setChatList } = chatListSlice.actions;
 
-export const selectChatList = (state: any) => {return state.ideaReducer.idea};
+export const selectChatList = (state: any) => {return state.chatListReducer.chatList};

@@ -11,6 +11,7 @@ import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header  } from '@m
 import {IconExternalLink } from '@tabler/icons';
 
 import { selectIdea } from '@/redux/ideaSlice';
+import { setChatList, selectChatList } from '@/redux/chatListSlice';
 
 export default function Top() {
     const dispatch = useDispatch();
@@ -21,10 +22,7 @@ export default function Top() {
     const [message,setMessage] = useState("")
 
     const idea = useSelector(selectIdea);
-
-    const chatlog = []
-
-    const [chatList, setChatList] = useState([])
+    const chatList = useSelector(selectChatList)
 
     const moveBack=()=>{
       router.push("/solve")
@@ -52,9 +50,7 @@ export default function Top() {
           console.log(data.result)
     
           // 取得データの整形
-          
-          setChatList([...chatList, {'user': question}, {'openai': data.result}])
-          console.log(chatList)
+          dispatch(setChatList([...chatList, {'user': question}, {'openai': data.result}]))
         } catch(error: any) {
           sendChat(event)
           console.error(error);
