@@ -15,18 +15,20 @@ import { selectTitleList,addTitleList } from '@/redux/titleListSlice'
 import { useRouter } from "next/router";
 
 export default function Home() {
-  const dispatch = useDispatch();
-  const { increment,decrement } = counterSlice.actions;
-  const [text,setText] = useState("")
-  const router = useRouter()
-  const ideaList = useSelector(selectIdeaList);
-  const TitleList = useSelector(selectTitleList);
+	const dispatch = useDispatch();
+	const { increment,decrement } = counterSlice.actions;
+	const [text,setText] = useState("")
+	const router = useRouter()
+	const ideaList = useSelector(selectIdeaList);
+	const TitleList = useSelector(selectTitleList);
 
-  	async function generateIdea(event: any) {
+	const [isLoading, setLoading] = useState(false)
+
+	async function generateIdea(event: any) {
 		dispatch(addTitleList(text))
 		let errorCount = 0
-		event.preventDefault();
-		
+		setLoading(true)
+
 		try {
 			const response = await fetch("/api/generateIdea", {
 				method: "POST",
@@ -51,18 +53,22 @@ export default function Home() {
 
 			dispatch(setIdeaList(changeArray))
 			dispatch(increment())
+
+			// ローディング終了
+			setLoading(false)
 			router.push("/solve");
 		} catch(error: any) {
 			errorCount++
 			generateIdea(event)
 
 			console.error(error);
-		} 
-  	}
+		}
+	}
 
 	const generateIdeaWithoutProblem = async (junre: string) => {
 		let errorCount = 0
-		
+		setLoading(true)
+
 		try {
 			const response = await fetch("/api/generateIdeaWithoutProblem", {
 				method: "POST",
@@ -87,18 +93,25 @@ export default function Home() {
 
 			dispatch(setIdeaList(changeArray))
 			dispatch(increment())
+			setLoading(false)
 			router.push("/solve");
 		} catch(error: any) {
 			errorCount++
 			generateIdea(junre)
-
-			console.error(error);
-		} 
+			setLoading(false)
+		}
 	}
 
 	return (
 		<>
-		<Stepbar />
+			{(() => {
+				if (isLoading) {
+					return (
+						<div className='bg-slate-500 w-screen h-screen z-10 fixed '></div>
+					)
+				}
+			})()}
+			<Stepbar />
 
 			<br />
 			<h1 className ="flex justify-center mt-20 font-bold" >あなたが解決したい課題を教えてください</h1>
@@ -108,7 +121,7 @@ export default function Home() {
 
 			<Group position="center" mt={100}>
 				<Button onClick={generateIdea} variant="filled" color="yellow" size="md">
-				解決策の提案
+					解決策の提案
 				</Button>
 			</Group>
 			<button onClick={() => {generateIdeaWithoutProblem('面白い')}}>面白い</button>

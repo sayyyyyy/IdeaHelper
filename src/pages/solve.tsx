@@ -21,7 +21,8 @@ export default function solve() {
 
   const ideaList = useSelector(selectIdeaList);
 
-  const moveDucumet=()=>{
+  const moveDucument = (idea: string)=>{
+    dispatch(setIdea(idea))
     dispatch(increment());
     router.push("/document");
   }
@@ -53,9 +54,12 @@ export default function solve() {
                     activities on and around the fjords of Norway */}
                   </Text>
                  
-                  <button value={idea} onClick={(e) => moveChat(e.target.value)}>
+                  <Button variant="light" color="yellow" fullWidth mt="md" radius="md" onClick={() => moveChat(idea)}>
                     もっと深ぼる
-                  </button>
+                  </Button>
+                  <Button onClick={() => moveDucument(idea)} variant="filled" color="yellow" size="md">
+                    ドキュメント化
+                  </Button>
                 </Card>
               </div>
             </>
@@ -69,9 +73,6 @@ export default function solve() {
         {/* <Button variant="outline" color="yellow" size="md" onClick={() => {dispatch(decrement());router.push('/chat')}}>
           解決策の提案
         </Button> */}
-        <Button onClick={moveDucumet} variant="filled" color="yellow" size="md">
-          ドキュメント化
-        </Button>
       </Group>
     </>
   )

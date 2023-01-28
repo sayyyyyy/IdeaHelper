@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -13,6 +13,7 @@ export default function Document() {
     const idea = useSelector(selectIdea)
     const documentList = useSelector(selectDocument)
     const chatList = useSelector(selectChatList)
+    const [isLoading, setLoading] = useState(false)
 
     const questionList = [
         {question: `${idea}のアプリ名を正確な文章で提案してください。`, questionText: 'アプリ名案'},
@@ -22,6 +23,7 @@ export default function Document() {
     ]
 
     async function createDocument() {
+        setLoading(true)
 		try {
 			const response = await fetch("/api/createDocument", {
                 method: "POST",
@@ -36,9 +38,10 @@ export default function Document() {
 			    throw data.error || new Error(`Request failed with status ${response.status}`);
 			}
 
-			dispatch(setDocument(data.result))
-	
+			dispatch(setDocument(data.result)) 
+            setLoading(false)
 		} catch(error: any) {
+            setLoading(false)
 			console.error(error);
 		}
 	}
@@ -123,6 +126,13 @@ export default function Document() {
     }
     return (
         <>
+            {(() => {
+                if (isLoading) {
+                    return (
+						<div className='bg-slate-500 w-screen h-screen z-10 fixed '></div>
+                    )
+                }
+            })()}
             <h1>ドキュメント化</h1>
             <button onClick={createDocument}>生成する</button>
             <div id='to-pdf'>
