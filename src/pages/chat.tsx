@@ -56,6 +56,7 @@ export default function Top() {
     
           // 取得データの整形
           dispatch(setChatList([...chatList, {'user': question}, {'openai': data.result}]))
+          setMessage('')
         } catch(error: any) {
           sendChat(event)
           console.error(error);
