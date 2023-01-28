@@ -24,60 +24,93 @@ export default function Home() {
 
 	const [isLoading, setLoading] = useState(false)
 
-	async function onSubmit(event: any) {
+	async function generateIdea(event: any) {
 		dispatch(addTitleList(text))
 		let errorCount = 0
-		event.preventDefault();
-		// ローディング開始
 		setLoading(true)
 
 		try {
-		const response = await fetch("/api/generateIdea", {
-			method: "POST",
-			headers: {
-			"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ problem : text }),
-		});
+			const response = await fetch("/api/generateIdea", {
+				method: "POST",
+				headers: {
+				"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ problem : text }),
+			});
 
-		const data = await response.json();
-		if (response.status !== 200) {
-			console.log(data.error)
-			return 
-		}
+			const data = await response.json();
+			if (response.status !== 200) {
+				console.log(data.error)
+				return 
+			}
 
-		// 取得データの整形
-		const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '').split(',')
-		const changeArray = []
-		for (const formatIdea of formatIdeaList) {
-			changeArray.push(JSON.parse(formatIdea).idea)
-		}
+			// 取得データの整形
+			const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '').split(',')
+			const changeArray = []
+			for (const formatIdea of formatIdeaList) {
+				changeArray.push(JSON.parse(formatIdea).idea)
+			}
 
-		dispatch(setIdeaList(changeArray))
-		dispatch(increment())
-		
-		// ローディング終了
-		setLoading(false)
+			dispatch(setIdeaList(changeArray))
+			dispatch(increment())
 
-		router.push("/solve");
+			// ローディング終了
+			setLoading(false)
+			router.push("/solve");
 		} catch(error: any) {
-		errorCount++
-		onSubmit(event)
+			errorCount++
+			generateIdea(event)
 
-		console.error(error);
-		} finally {
+			console.error(error);
+		}
+	}
+
+	const generateIdeaWithoutProblem = async (junre: string) => {
+		let errorCount = 0
+		setLoading(true)
+
+		try {
+			const response = await fetch("/api/generateIdeaWithoutProblem", {
+				method: "POST",
+				headers: {
+				"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ junre : junre }),
+			});
+
+			const data = await response.json();
+			if (response.status !== 200) {
+				console.log(data.error)
+				return 
+			}
+
+			// 取得データの整形
+			const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '').split(',')
+			const changeArray = []
+			for (const formatIdea of formatIdeaList) {
+				changeArray.push(JSON.parse(formatIdea).idea)
+			}
+
+			dispatch(setIdeaList(changeArray))
+			dispatch(increment())
+			setLoading(false)
+			router.push("/solve");
+		} catch(error: any) {
+			errorCount++
+			generateIdea(junre)
+			setLoading(false)
 		}
 	}
 
 	return (
 		<>
-            {(() => {
-                if (isLoading) {
-                    return (
+			{(() => {
+				if (isLoading) {
+					return (
 						<div className='bg-slate-500 w-screen h-screen z-10 fixed '></div>
-                    )
-                }
-            })()}
+					)
+				}
+			})()}
 			<Stepbar />
 
 			<br />
@@ -87,10 +120,13 @@ export default function Home() {
 			</div>
 
 			<Group position="center" mt={100}>
-				<Button onClick={onSubmit} variant="filled" color="yellow" size="md">
+				<Button onClick={generateIdea} variant="filled" color="yellow" size="md">
 					解決策の提案
 				</Button>
 			</Group>
+			<button onClick={() => {generateIdeaWithoutProblem('面白い')}}>面白い</button>
+			<button onClick={() => {generateIdeaWithoutProblem('便利な')}}>便利</button>
+			<button onClick={() => {generateIdeaWithoutProblem('使いやすい')}}>使いやすい</button>
 		</>
 	)
 }
