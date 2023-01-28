@@ -6,6 +6,13 @@ import { selectIdea } from '@/redux/ideaSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { selectDocument, setDocument } from '@/redux/documentSlice';
 import { selectChatList } from '@/redux/chatListSlice';
+import Stepbar from '@/components/stepbar'
+
+import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex,Grid  } from '@mantine/core';
+import { Copy,Code,FileDownload } from 'tabler-icons-react';
+import { Margarine } from '@next/font/google';
+import { Alert } from '@mantine/core';
+import { IconAlertCircle } from '@tabler/icons';
 
 export default function Document() {
     const dispatch = useDispatch();
@@ -14,6 +21,7 @@ export default function Document() {
     const documentList = useSelector(selectDocument)
     const chatList = useSelector(selectChatList)
     const [isLoading, setLoading] = useState(false)
+    const [copy,setCopy] =useState(false)
 
     const questionList = [
         {question: `${idea}のアプリ名を正確な文章で提案してください。`, questionText: 'アプリ名案'},
@@ -50,6 +58,7 @@ export default function Document() {
         navigator.clipboard.writeText(text).then(
 			() => {
 			  console.log('コピーしました')
+              setCopy(true)
 			},
 			(e) => {
                 console.error(e)
@@ -126,6 +135,7 @@ export default function Document() {
     }
     return (
         <>
+            <Stepbar />
             {(() => {
                 if (isLoading) {
                     return (
@@ -133,8 +143,12 @@ export default function Document() {
                     )
                 }
             })()}
-            <h1>ドキュメント化</h1>
-            <button onClick={createDocument}>生成する</button>
+
+            <Center >
+                <Button onClick={createDocument} variant="outline" mt="md" color="yellow" size="md" style={{width:300,marginTop:50}}>
+                    ドキュメントを生成する
+                </Button>
+            </Center>
             <div id='to-pdf'>
                 {(() => {
                     if (documentList.length !== 0) {
@@ -167,9 +181,52 @@ export default function Document() {
                     }
                 })()}
             </div>
-            <button onClick={() => copyText(conversionToText())}>COPY</button>
-            <button onClick={() => copyText(conversionToMarkdownText())}>Markdown Copy</button>
-            <button onClick={conversionToPDF}>pdf</button>
+        
+            <Center style={{backgroundColor:"white" ,marginTop:100}}>
+            <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50} >
+                <Grid.Col span={4}>
+                    <Button style={{borderColor:"2px solid #FCC419",backgroundColor:"white",width:70,height:70,borderRadius:"50%"}} onClick={() => copyText(conversionToText())}>
+                        <Copy
+                            size={56}
+                            strokeWidth={2}
+                            color={'#FCC419'}
+                        />
+                    </Button>
+                    <Center><Text color="gray.5">COPY</Text></Center>
+                </Grid.Col>
+                <Grid.Col span={4}>
+                    <Button style={{borderColor:"2px solid #FCC419" ,width:70,height:70,borderRadius:"50%" ,backgroundColor:"white"}} onClick={() => copyText(conversionToMarkdownText())}>
+                        <Code
+                            size={56}
+                            strokeWidth={2}
+                            color={'#FCC419'}
+                        />
+                    </Button>
+                    <Center><Text color="gray.5">MARKDOWN</Text></Center>
+                </Grid.Col>
+                <Grid.Col span={4}>
+                    <Button style={{backgroundColor:"white",borderColor:"2px solid #FCC419" ,width:70,height:70,borderRadius:"50%"}} onClick={conversionToPDF}>
+                        <FileDownload
+                            size={56}
+                            strokeWidth={2}
+                            color={'#FCC419'}
+                        />
+                    </Button>
+                    <Center><Text color="gray.5">PDF</Text></Center>
+                </Grid.Col>
+            </Grid>
+            </Center>
+
+            
+
+            {/* { (function(){
+                if(copy) {
+                    <Alert color="blue.7">
+                        コピーしました
+                    </Alert>
+                }   
+                })()
+            } */}
         </>
     )
 }

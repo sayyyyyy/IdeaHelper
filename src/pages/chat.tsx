@@ -92,7 +92,7 @@ export default function Top() {
     </div>
       
 
-      <ScrollArea style={{ height: "70%",}}>
+      <ScrollArea style={{ height: "70%",marginTop:50}}>
         {
             chatList.map((chat) =>
                 {if (Object.keys(chat)[0] == 'user') {
