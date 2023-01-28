@@ -43,36 +43,34 @@ export default function solve() {
         {ideaList.map((idea:any,index:any) =>{
           return(
             <>
-              <div style={{ width: 280,marginTop:'100px',marginRight:'20px',display:'flex'}} key={index}>
-                <Card shadow="sm" p="lg" radius="md" withBorder >
+              <div style={{ width: 280,marginTop:'100px',marginRight:'50px',display:'flex'}} key={index}>
+                <div>
+                <Card shadow="sm" p="lg" radius="md" withBorder style={{width:300,height:200}}>
                   <Group position="center" mt="md" mb="xs" >
                     <Text weight={500}>{idea}</Text>
-                  </Group>
-
-                  <Text size="sm" color="dimmed">
-                    {/* With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-                    activities on and around the fjords of Norway */}
-                  </Text>
-                 
-                  <Button variant="light" color="yellow" fullWidth mt="md" radius="md" onClick={() => moveChat(idea)}>
-                    もっと深ぼる
-                  </Button>
-                  <Button onClick={() => moveDucument(idea)} variant="filled" color="yellow" size="md">
-                    ドキュメント化
-                  </Button>
+                  </Group>  
+                  <Center >     
+                    <Button variant="light" color="yellow" mt="md" radius="md" onClick={() => moveChat(idea)} style={{position:"absolute", bottom: 0,width:"70%",marginBottom:20}}>
+                      もっと深ぼる
+                    </Button>
+                  </Center>
                 </Card>
+                <Center >
+                  <Button onClick={() => moveDucument(idea)} variant="filled" mt="md" color="yellow" size="md" style={{width:200}}>
+                      ドキュメント化
+                  </Button>
+                </Center>
+              </div>
               </div>
             </>
           )}
         )}
       </div>
-      <Group position="center" mt="xl">
+
+      <Group position="center" mt="80px">
         <Button variant="default" onClick={() => {dispatch(decrement());router.push("/");}}>
           戻る
         </Button>
-        {/* <Button variant="outline" color="yellow" size="md" onClick={() => {dispatch(decrement());router.push('/chat')}}>
-          解決策の提案
-        </Button> */}
       </Group>
     </>
   )
