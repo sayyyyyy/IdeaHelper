@@ -36,7 +36,7 @@ export default function solve() {
       <Stepbar />
 
       <Center style={{ marginTop:60}}>
-        <Title order={1}>{TitleList}</Title>
+        {/* <Title order={1}>{TitleList}</Title> */}
       </Center>
       <div style={{ justifyContent:"center",display:'flex',marginTop:20}} >
         {ideaList.map((idea:any,index:any) =>{
