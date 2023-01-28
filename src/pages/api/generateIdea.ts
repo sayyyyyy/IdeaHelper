@@ -12,7 +12,7 @@ export default async function (req: any, res: any) {
   }
 
   try {
-    const completion = await callOpenAI(`${problem}を解決するアプリのアイデアを{{'idea': value}, {'idea': value}, {'idea': value}}形式のjsonで3つ渡してください`)
+    const completion = await callOpenAI(`${problem}を解決するアプリのアイデアを{{'idea': value}, {'idea': value}, {'idea': value}}形式のjsonで3つ渡してください。`)
     if (!completion) {
       res.status(500).json({
         error: {
@@ -22,7 +22,7 @@ export default async function (req: any, res: any) {
       return
     }
     
-    res.status(200).json({ result: completion.data.choices[0].text });
+    res.status(200).json({ result: completion });
   } catch(error: any) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {

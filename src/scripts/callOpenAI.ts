@@ -17,5 +17,6 @@ export const callOpenAI = async (prompt: string) => {
         prompt: prompt,
         temperature: 0.6,
     });
-    return completion
+    console.log(completion.data.choices[0].text)
+    return completion.data.choices[0].text
 }
