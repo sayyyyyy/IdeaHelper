@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
 import { counterSlice, CounterState,selectCount } from "../redux/counterSlice";
-import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header  } from '@mantine/core';
+import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex  } from '@mantine/core';
 import {IconExternalLink } from '@tabler/icons';
 
 import { selectIdea } from '@/redux/ideaSlice';
@@ -65,22 +65,26 @@ export default function Top() {
     
     return (
     <>
-      <header style={{display:"flex",justifyContent:"center",position: "fixed"}}>
-        <Button variant="light" color="yellow" size="md" onClick={moveBack}> ＜ </Button>
-        <h1>{idea}</h1>
+
+    <div style={{position:"fixed" ,backgroundColor:"#FFFFFF",width:"100%",height:120 ,zIndex:1 ,marginTop:-20}}>
+      <header style={{backgroundColor:"#FCC419",width:"86%",display:"flex",height:80,position:"fixed",zIndex:2,marginTop:20}}>
+        <Center style={{width:"100%"}}>
+          <Button variant="light" color="yellow" size="md" onClick={moveBack} style={{marginLeft: "-40%",marginRight:"40%"}}> ＜ </Button>
+          <h1 className='text-white font-bold ' >{idea}</h1>
+        </Center>
       </header>
+    </div>
       
 
-      <ScrollArea style={{ marginTop: 50,height: "70%",}}>
+      <ScrollArea style={{ height: "70%",}}>
         {
             chatList.map((chat) =>
                 {if (Object.keys(chat)[0] == 'user') {
                     return (
                       <>
                         <div key={Object.values(chat)[0]}>
-                          <Group style={{ marginTop: 50}}>
-                            <Avatar radius="xl" />
-                            <div style={{ width: 400}} >
+                          <Group style={{ marginTop: 50 ,marginBottom:50,display:'flex',justifyContent: "flex-end",color:"pink"}}>
+                            <div style={{ width: 400,backgroundColor:"yellow"}} >
                               <Paper shadow="xs" p="md" color="yellow">
                                 <Text >
                                 {Object.values(chat)[0]}
@@ -88,7 +92,6 @@ export default function Top() {
                               </Paper>
                             </div>
                           </Group>
-                      
                         </div>
                       </>
                     )
@@ -97,8 +100,9 @@ export default function Top() {
                       // <p key={Object.values(chat)[0]} className=''>{Object.values(chat)[0]}</p>
                       <>
                         <div key={Object.values(chat)[0]}>
-                          <Group style={{ marginTop: 50 ,marginBottom:50,display:'flex',justifyContent: "flex-end",color:"pink"}}>
-                            <div style={{ width: 400,backgroundColor:"yellow"}} >
+                          <Group style={{ marginTop: 50}}>
+                            <Avatar radius="xl" />
+                            <div style={{ width: 400}} >
                               <Paper shadow="xs" p="md" color="yellow">
                                 <Text color="yellow">
                                 {Object.values(chat)[0]}
@@ -106,6 +110,7 @@ export default function Top() {
                               </Paper>
                             </div>
                           </Group>
+                      
                         </div>
                       </>
                     )
@@ -117,19 +122,18 @@ export default function Top() {
 
       </ScrollArea>
 
+      <Center style={{display:'flex' ,bottom: "0",position:"fixed",marginBottom:10, backgroundColor:"white",justifyContent:"center",width:"100%"}}>
+          <Textarea
+          placeholder="メッセージを記入してください"
+          withAsterisk
+          style={{ width:'50%',marginRight:20}}
+          value={message}
+          onChange={(event) => setMessage(event.currentTarget.value)}
+          />
+          <Button variant="light" color="yellow.7" size="md" onClick={sendChat} style={{backgroundColor:"#FAB005",color:"white"}}>送信</Button>
+          <button onClick={moveDucumet}>ドキュメントへ</button>
+      </Center>
 
-      <div style={{display:'flex' ,bottom: "0",position:"fixed",marginBottom:10, backgroundColor:"white"}}>
-        <Textarea
-        placeholder="Your comment"
-        withAsterisk
-        style={{ width:'600px'}}
-        value={message}
-        onChange={(event) => setMessage(event.currentTarget.value)}
-        />
-        <Button variant="light" color="yellow.7" size="md" onClick={sendChat} style={{backgroundColor:"#FAB005",color:"white"}}>送信</Button>
-      </div>
-      <button onClick={moveDucumet}>ドキュメントへ</button>
     </>
   )
 }
-

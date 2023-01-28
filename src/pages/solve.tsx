@@ -4,12 +4,13 @@ import styles from '@/styles/Home.module.css'
 import Stepbar from '@/components/stepbar'
 
 const inter = Inter({ subsets: ['latin'] })
-import { Button, Group,Card, Image,Text, Badge, Flex } from '@mantine/core';
+import { Button, Group,Card, Image,Text, Badge, Flex, Center,Title } from '@mantine/core';
 import { useDispatch, useSelector } from "react-redux";
 import { counterSlice, CounterState, selectCount } from "../redux/counterSlice";
 import { setIdea } from '@/redux/ideaSlice'
 import { useRouter } from "next/router";
 import { selectIdeaList, setIdeaList } from "../redux/idealistSlice";
+import { selectTitleList,addTitleList } from '@/redux/titleListSlice'
 
 export default function solve() {
   const dispatch = useDispatch();
@@ -33,6 +34,10 @@ export default function solve() {
   return (
     <>
       <Stepbar />
+
+      <Center style={{ marginTop:60}}>
+        <Title order={1}>{TitleList}</Title>
+      </Center>
       <div style={{ justifyContent:"center",display:'flex',marginTop:20}} >
         {ideaList.map((idea:any,index:any) =>{
           return(
@@ -42,7 +47,12 @@ export default function solve() {
                   <Group position="center" mt="md" mb="xs" >
                     <Text weight={500}>{idea}</Text>
                   </Group>
-                  
+
+                  <Text size="sm" color="dimmed">
+                    {/* With Fjord Tours you can explore more of the magical fjord landscapes with tours and
+                    activities on and around the fjords of Norway */}
+                  </Text>
+                 
                   <button value={idea} onClick={(e) => moveChat(e.target.value)}>
                     もっと深ぼる
                   </button>

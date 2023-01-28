@@ -33,8 +33,9 @@ export default function App(props: AppProps) {
               <Navbar.Section  mt="md">地球温暖化</Navbar.Section>
               </Navbar>
             } 
+            
           >
-            <Component {...pageProps} />
+            <Component {...pageProps}/>
           </AppShell>
         </MantineProvider>
       </Provider>
