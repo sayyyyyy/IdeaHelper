@@ -43,7 +43,23 @@ export default function Document() {
 	}
 
 	const copyText = () => {
-        const stringDocument = ''
+        let stringDocument = ''
+        console.log(document)
+        console.log(chatList)
+
+        if (document.length !== 0) {
+            for (const context of document) {
+                stringDocument += `${context.question}\n${context.answer}\n\n`
+    
+            }
+        }
+
+        stringDocument += '\n\n'
+        if (chatList.length !== 0) {
+            for (const chat of chatList) {
+                stringDocument += `${Object.keys(chat)[0]}: ${Object.values(chat)[0]}\n`
+            }
+        }
 		navigator.clipboard.writeText(stringDocument).then(
 			() => {
 			  console.log('コピーしました')
@@ -55,9 +71,10 @@ export default function Document() {
     return (
         <>
             <h1>ドキュメント化</h1>
+            <h2>{idea}</h2>
             <button onClick={createDocument}>生成する</button>
             {(() => {
-                if (document) {
+                if (document.length !== 0) {
                     return (
                         document.map(idea => (		
                             <>
@@ -70,7 +87,7 @@ export default function Document() {
                 }
             })()}
             {(() => {
-                if (chatList) {
+                if (chatList.length !== 0) {
                     
                     return (
                         <>
