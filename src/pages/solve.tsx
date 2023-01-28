@@ -4,11 +4,12 @@ import styles from '@/styles/Home.module.css'
 import Stepbar from '@/components/stepbar'
 
 const inter = Inter({ subsets: ['latin'] })
-import { Button, Group,Card, Image,Text, Badge, Flex } from '@mantine/core';
+import { Button, Group,Card, Image,Text, Badge, Flex, Center,Title } from '@mantine/core';
 import { useDispatch, useSelector } from "react-redux";
 import { counterSlice, CounterState, selectCount } from "../redux/counterSlice";
 import { useRouter } from "next/router";
 import { selectIdeaList, setIdeaList } from "../redux/idealistSlice";
+import { selectTitleList,addTitleList } from '@/redux/titleListSlice'
 
 export default function solve() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function solve() {
 
   const ideaList = useSelector(selectIdeaList);
   // const ideaList =["gagagag","111111","kkkkkkk"]
+  const TitleList = useSelector(selectTitleList);
 
   const moveDucumet=()=>{
     // dispatch(increment());
@@ -28,6 +30,10 @@ export default function solve() {
   return (
     <>
       <Stepbar />
+
+      <Center style={{ marginTop:60}}>
+        <Title order={1}>{TitleList}</Title>
+      </Center>
       <div style={{ justifyContent:"center",display:'flex',marginTop:20}} >
         {ideaList.map((idea:any,index:any) =>{
           return(

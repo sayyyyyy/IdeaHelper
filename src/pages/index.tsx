@@ -89,8 +89,6 @@ export default function Home() {
           <p key={idea}>{idea}</p>
         )
       }
-      {TitleList}
-    
     </>
   )
 }
