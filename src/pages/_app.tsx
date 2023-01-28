@@ -34,11 +34,12 @@ export default function App(props: AppProps) {
                 <hr />
                 <Navbar.Section  mt="md">地球温暖化</Navbar.Section>
                 <Navbar.Section  mt="md">
-                  <Button variant="light" color="yellow" mt="md" radius="md" onClick={() => router.push("/")}>
+                  <Button variant="light" color="yellow" mt="md" ml="md" radius="md" onClick={() => router.push("/")}>
                       ＋
                   </Button>
                 </Navbar.Section>
               </Navbar>
+              
             } 
           >
             <Component {...pageProps}/>
