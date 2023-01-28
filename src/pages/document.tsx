@@ -1,4 +1,6 @@
 import React from 'react'
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 import { selectIdea } from '@/redux/ideaSlice'
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +11,7 @@ export default function Document() {
     const dispatch = useDispatch();
 
     const idea = useSelector(selectIdea)
-    const document = useSelector(selectDocument)
+    const documentList = useSelector(selectDocument)
     const chatList = useSelector(selectChatList)
 
     const questionList = [
@@ -59,8 +61,8 @@ export default function Document() {
             stringDocument += `${idea}\n`
         }
 
-        if (document.length !== 0) {
-            for (const context of document) {
+        if (documentList.length !== 0) {
+            for (const context of documentList) {
                 stringDocument += `${context.question}\n${context.answer}\n\n`
     
             }
@@ -82,8 +84,8 @@ export default function Document() {
             stringDocument += `# ${idea}\n`
         }
 
-        if (document.length !== 0) {
-            for (const context of document) {
+        if (documentList.length !== 0) {
+            for (const context of documentList) {
                 stringDocument += `## ${context.question}\n${context.answer}\n\n`
     
             }
@@ -100,43 +102,64 @@ export default function Document() {
         return stringDocument
     }
 
+    const conversionToPDF = () => {
+        console.log(idea)
+        if (!idea) {
+            console.log("error1")
+            return
+        }
 
+        const target = document.getElementById('to-pdf')
+        if (target === null) {
+            console.log('error2')
+            return};
+
+        html2canvas(target, { scale: 2.5 }).then((canvas) => {
+            const imgData = canvas.toDataURL('image/svg', 1.0);
+            let pdf = new jsPDF();
+            pdf.addImage(imgData, 'SVG', 5, 10, canvas.width / 18, canvas.height / 18);
+            pdf.save(`test.pdf`);
+        });
+    }
     return (
         <>
             <h1>ドキュメント化</h1>
             <button onClick={createDocument}>生成する</button>
-            {(() => {
-                if (document.length !== 0) {
-                    return (
-                        document.map((idea: {question: string, answer: string}) => (		
-                            <>
-                                <p>{idea.question}</p>
-                                <p>{idea.answer}</p>
-                            </>
-                        ))
-
-                    )
-                }
-            })()}
-            {(() => {
-                if (chatList.length !== 0) {
-                    return (
-                        <>
-                            <p>メモ</p>
-                            {    
-                                chatList.map((chat: {[speaker: string]: string}) => (
+            <div id='to-pdf'>
+                {(() => {
+                    if (documentList.length !== 0) {
+                        return (
+                            documentList.map((idea: {question: string, answer: string}) => (		
                                 <>
-                                    <span>{Object.keys(chat)[0]}</span>
-                                    <span>{Object.values(chat)[0]}</span>
-                                    <br />
+                                    <p>{idea.question}</p>
+                                    <p>{idea.answer}</p>
                                 </>
-                            ))}
-                        </>
-                    )
-                }
-            })()}
+                            ))
+
+                        )
+                    }
+                })()}
+                {(() => {
+                    if (chatList.length !== 0) {
+                        return (
+                            <>
+                                <p>メモ</p>
+                                {    
+                                    chatList.map((chat: {[speaker: string]: string}) => (
+                                    <>
+                                        <span>{Object.keys(chat)[0]}</span>
+                                        <span>{Object.values(chat)[0]}</span>
+                                        <br />
+                                    </>
+                                ))}
+                            </>
+                        )
+                    }
+                })()}
+            </div>
             <button onClick={() => copyText(conversionToText())}>COPY</button>
             <button onClick={() => copyText(conversionToMarkdownText())}>Markdown Copy</button>
+            <button onClick={conversionToPDF}>pdf</button>
         </>
     )
 }
