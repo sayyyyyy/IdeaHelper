@@ -7,6 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 import { Button, Group,Card, Image,Text, Badge, Flex } from '@mantine/core';
 import { useDispatch, useSelector } from "react-redux";
 import { counterSlice, CounterState, selectCount } from "../redux/counterSlice";
+import { setIdea } from '@/redux/ideaSlice'
 import { useRouter } from "next/router";
 import { selectIdeaList, setIdeaList } from "../redux/idealistSlice";
 
@@ -24,6 +25,12 @@ export default function solve() {
     // router.push("/document");
   }
 
+  const moveChat = (idea: string) => {
+    dispatch(setIdea(idea))
+    // console.log(idea)
+    router.push("/chat")
+  }
+
   return (
     <>
       <Stepbar />
@@ -35,19 +42,11 @@ export default function solve() {
                 <Card shadow="sm" p="lg" radius="md" withBorder >
                   <Group position="center" mt="md" mb="xs" >
                     <Text weight={500}>{idea}</Text>
-                    {/* <Badge color="pink" variant="light">
-                      On Sale
-                    </Badge> */}
                   </Group>
                   
-                  {/* <Text size="sm" color="dimmed">
-                    With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-                    activities on and around the fjords of Norway
-                  </Text> */}
-                  
-                  <Button variant="light" color="yellow" fullWidth mt="md" radius="md" onClick={() => {router.push("/chat")}}>
+                  <button value={idea} onClick={(e) => moveChat(e.target.value)}>
                     もっと深ぼる
-                  </Button>
+                  </button>
                 </Card>
               </div>
             </>

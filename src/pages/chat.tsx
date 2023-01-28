@@ -10,6 +10,8 @@ import { counterSlice, CounterState,selectCount } from "../redux/counterSlice";
 import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header  } from '@mantine/core';
 import {IconExternalLink } from '@tabler/icons';
 
+import { selectIdea } from '@/redux/ideaSlice';
+
 export default function Top() {
     const dispatch = useDispatch();
     const selector = useSelector(selectCount);
@@ -17,6 +19,8 @@ export default function Top() {
 
     const router = useRouter()
     const [message,setMessage] = useState("")
+
+    const idea = useSelector(selectIdea);
 
     const chatlog = []
 
@@ -28,7 +32,6 @@ export default function Top() {
 
     async function sendChat(event: any) {
         const question = message
-        const idea = '低炭素社会への移行を促進するアプリ"'
 
         event.preventDefault();
         try {
@@ -63,7 +66,7 @@ export default function Top() {
     <>
       <header style={{display:"flex",justifyContent:"center",position: "fixed"}}>
         <Button variant="light" color="yellow" size="md" onClick={moveBack}> ＜ </Button>
-        <h1>地球温暖化</h1>
+        <h1>{idea}</h1>
       </header>
       
 
