@@ -11,7 +11,6 @@ export default function Document() {
     const idea = useSelector(selectIdea)
     const document = useSelector(selectDocument)
     const chatList = useSelector(selectChatList)
-    // console.log(chatList)
 
     const questionList = [
         {question: `${idea}のアプリ名を正確な文章で提案してください。`, questionText: 'アプリ名案'},
@@ -35,17 +34,29 @@ export default function Document() {
 			    throw data.error || new Error(`Request failed with status ${response.status}`);
 			}
 
-			dispatch(setDocument(data.result)) 
+			dispatch(setDocument(data.result))
 	
 		} catch(error: any) {
 			console.error(error);
 		}
 	}
 
-	const copyText = () => {
+	const copyText = (text: string) => {
+        navigator.clipboard.writeText(text).then(
+			() => {
+			  console.log('コピーしました')
+			},
+			() => {
+			  console.log('コピーに失敗しました')
+			});
+	}
+
+    const conversionToText = () => {
         let stringDocument = ''
-        console.log(document)
-        console.log(chatList)
+
+        if (idea) {
+            stringDocument += `${idea}\n`
+        }
 
         if (document.length !== 0) {
             for (const context of document) {
@@ -60,19 +71,11 @@ export default function Document() {
                 stringDocument += `${Object.keys(chat)[0]}: ${Object.values(chat)[0]}\n`
             }
         }
-		navigator.clipboard.writeText(stringDocument).then(
-			() => {
-			  console.log('コピーしました')
-			},
-			() => {
-			  console.log('コピーに失敗しました')
-			});
-	}
+        return stringDocument
+    }
 
-    const copyTextToMarkdown = () => {
+    const conversionToMarkdownText = () => {
         let stringDocument = ''
-        console.log(document)
-        console.log(chatList)
 
         if (idea) {
             stringDocument += `# ${idea}\n`
@@ -92,24 +95,19 @@ export default function Document() {
                 stringDocument += `${Object.keys(chat)[0]}: ${Object.values(chat)[0]}\n`
             }
         }
-		navigator.clipboard.writeText(stringDocument).then(
-			() => {
-			  console.log('コピーしました')
-			},
-			() => {
-			  console.log('コピーに失敗しました')
-			});
-	}
+
+        return stringDocument
+    }
+
 
     return (
         <>
             <h1>ドキュメント化</h1>
-            <h2>{idea}</h2>
-            <button onClick={createDocument}>生成する</button>
+            <button onClick={textchange}>生成する</button>
             {(() => {
                 if (document.length !== 0) {
                     return (
-                        document.map(idea => (		
+                        document.map((idea: {question: string, answer: string}) => (		
                             <>
                                 <p>{idea.question}</p>
                                 <p>{idea.answer}</p>
@@ -127,7 +125,7 @@ export default function Document() {
                             <p>メモ</p>
                             {
                                 
-                                chatList.map(chat => (
+                                chatList.map((chat: {[speaker: string]: string}) => (
                                 <>
                                     <span>{Object.keys(chat)[0]}</span>
                                     <span>{Object.values(chat)[0]}</span>
@@ -138,8 +136,8 @@ export default function Document() {
                     )
                 }
             })()}
-            <button onClick={copyText}>COPY</button>
-            <button onClick={copyTextToMarkdown}>Markdown Copy</button>
+            {/* <button onClick={copyText}>COPY</button>
+            <button onClick={copyTextToMarkdown}>Markdown Copy</button> */}
         </>
     )
 }
