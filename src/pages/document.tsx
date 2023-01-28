@@ -8,7 +8,7 @@ import { selectDocument, setDocument } from '@/redux/documentSlice';
 import { selectChatList } from '@/redux/chatListSlice';
 import Stepbar from '@/components/stepbar'
 
-import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex,Grid  } from '@mantine/core';
+import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex,Grid,Card  } from '@mantine/core';
 import { Copy,Code,FileDownload } from 'tabler-icons-react';
 import { Margarine } from '@next/font/google';
 import { Alert } from '@mantine/core';
@@ -145,42 +145,57 @@ export default function Document() {
             })()}
 
             <Center >
-                <Button onClick={createDocument} variant="outline" mt="md" color="yellow" size="md" style={{width:300,marginTop:50}}>
+                <Button onClick={createDocument} variant="outline" mt="md" color="yellow" size="md" style={{width:300,marginTop:80}}>
                     ドキュメントを生成する
                 </Button>
             </Center>
-            <div id='to-pdf'>
-                {(() => {
-                    if (documentList.length !== 0) {
-                        return (
-                            documentList.map((idea: {question: string, answer: string}) => (		
-                                <>
-                                    <p>{idea.question}</p>
-                                    <p>{idea.answer}</p>
-                                </>
-                            ))
-
-                        )
-                    }
-                })()}
-                {(() => {
-                    if (chatList.length !== 0) {
-                        return (
-                            <>
-                                <p>メモ</p>
-                                {    
-                                    chatList.map((chat: {[speaker: string]: string}) => (
-                                    <>
-                                        <span>{Object.keys(chat)[0]}</span>
-                                        <span>{Object.values(chat)[0]}</span>
-                                        <br />
+            <Center>
+            <Card shadow="sm" p="lg" radius="md" withBorder style={{marginTop:30,width:"80%"}}>
+                <div id='to-pdf'>
+                    {(() => {
+                        if (documentList.length !== 0) {
+                            return (
+                                documentList.map((idea: {question: string, answer: string}) => (		
+                                    <>  
+                                        <div style={{marginBottom:26}}>
+                                            <Center>
+                                                <Card.Section style={{fontWeight:"bold",color:"#FCC419"}}><h1>{idea.question}</h1></Card.Section>
+                                            </Center>
+                                            <Center style={{marginLeft:30,marginRight:30}}>
+                                                <Card.Section><h3>{idea.answer}</h3></Card.Section>
+                                            </Center> 
+                                        </div>
                                     </>
-                                ))}
-                            </>
-                        )
-                    }
-                })()}
-            </div>
+                                ))
+
+                            )
+                        }
+                    })()}
+                    {(() => {
+                        if (chatList.length !== 0) {
+                            return (
+                                <>
+                                <Card.Section style={{marginLeft:20,marginRight:20,marginTop:20}}>
+                                    <Center>
+                                        <Card.Section style={{fontWeight:"bold",color:"#FCC419",marginTop:20}}><h1>メモ</h1></Card.Section>
+                                    </Center>
+                                    {    
+                                        chatList.map((chat: {[speaker: string]: string}) => (
+                                        <>
+                                            
+                                            <span>{Object.keys(chat)[0]}</span>
+                                            <span>{Object.values(chat)[0]}</span>
+                                            <br />
+                                        </>
+                                    ))}
+                                </Card.Section>
+                                </>
+                            )
+                        }
+                    })()}
+                </div>
+            </Card>
+            </Center>
         
             <Center style={{backgroundColor:"white" ,marginTop:100}}>
             <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50} >
