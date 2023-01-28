@@ -28,6 +28,11 @@ export default function Top() {
       router.push("/solve")
     }
 
+    const moveDucumet=()=>{
+      dispatch(increment());
+      router.push("/document");
+    }
+
     async function sendChat(event: any) {
         const question = message
 
@@ -123,6 +128,7 @@ export default function Top() {
         />
         <Button variant="light" color="yellow.7" size="md" onClick={sendChat} style={{backgroundColor:"#FAB005",color:"white"}}>送信</Button>
       </div>
+      <button onClick={moveDucumet}>ドキュメントへ</button>
     </>
   )
 }

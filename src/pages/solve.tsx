@@ -21,13 +21,12 @@ export default function solve() {
   const ideaList = useSelector(selectIdeaList);
 
   const moveDucumet=()=>{
-    // dispatch(increment());
-    // router.push("/document");
+    dispatch(increment());
+    router.push("/document");
   }
 
   const moveChat = (idea: string) => {
     dispatch(setIdea(idea))
-    // console.log(idea)
     router.push("/chat")
   }
 

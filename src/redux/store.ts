@@ -4,6 +4,7 @@ import {ideaListSlice} from "./idealistSlice"
 import { ideaSlice } from "./ideaSlice";
 import { titleListSlice } from "./titleListSlice";
 import { chatListSlice } from "./chatListSlice";
+import { documentSlice } from "./documentSlice";
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
       ideaListReducer: ideaListSlice.reducer,
       ideaReducer: ideaSlice.reducer,
       titleListReducer: titleListSlice.reducer,
-      chatListReducer: chatListSlice.reducer
+      chatListReducer: chatListSlice.reducer,
+      documentReducer: documentSlice.reducer,
     },
 });

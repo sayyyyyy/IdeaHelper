@@ -7,6 +7,7 @@ export const ideaSlice = createSlice({
   },
   reducers: {
     setIdea: (state, action) => {
+        console.log(action.payload)
       state.idea = action.payload;
     },
   },

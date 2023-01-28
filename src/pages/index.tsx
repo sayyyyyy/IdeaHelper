@@ -75,13 +75,6 @@ export default function Home() {
               解決策の提案
             </Button>
         </Group>
-      {
-        ideaList.map((idea:any) =>
-          <p key={idea}>{idea}</p>
-        )
-      }
-      {TitleList}
-    
     </>
   )
 }
