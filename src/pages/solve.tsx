@@ -17,8 +17,8 @@ export default function solve() {
   const router = useRouter()
   
 
-  // const ideaList = useSelector(selectIdeaList);
-  const ideaList =["gagagag","111111","kkkkkkk"]
+  const ideaList = useSelector(selectIdeaList);
+  // const ideaList =["gagagag","111111","kkkkkkk"]
 
   const moveDucumet=()=>{
     // dispatch(increment());
@@ -42,8 +42,8 @@ export default function solve() {
                   </Group>
                   
                   <Text size="sm" color="dimmed">
-                    With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-                    activities on and around the fjords of Norway
+                    {/* With Fjord Tours you can explore more of the magical fjord landscapes with tours and
+                    activities on and around the fjords of Norway */}
                   </Text>
                   
                   <Button variant="light" color="yellow" fullWidth mt="md" radius="md" onClick={() => {router.push("/chat")}}>
