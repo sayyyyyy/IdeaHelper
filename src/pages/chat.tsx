@@ -119,9 +119,9 @@ export default function Top() {
 
       <Center style={{display:'flex' ,bottom: "0",position:"fixed",marginBottom:10, backgroundColor:"white",justifyContent:"center",width:"100%"}}>
           <Textarea
-          placeholder="Your comment"
+          placeholder="メッセージを記入してください"
           withAsterisk
-          style={{ width:'600px',marginRight:20}}
+          style={{ width:'50%',marginRight:20}}
           value={message}
           onChange={(event) => setMessage(event.currentTarget.value)}
           />
