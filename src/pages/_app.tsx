@@ -27,10 +27,10 @@ export default function App(props: AppProps) {
         >
           <AppShell padding="md" 
             navbar={
-              <Navbar width={{base:200}} >
+              <Navbar width={{base:200}} style={{backgroundColor:"#FFFEF9"}}>
               <Navbar.Section  mt="md" >IdeaHelper</Navbar.Section>
               <hr />
-              <Navbar.Section  mt="md">幅設定ほぼ必須.型は後述</Navbar.Section>
+              <Navbar.Section  mt="md">地球温暖化</Navbar.Section>
               </Navbar>
             } 
           >

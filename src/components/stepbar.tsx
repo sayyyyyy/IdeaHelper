@@ -13,18 +13,20 @@ const Stepbar = () => {
 
         return (
             <>
-              <Stepper color="yellow" active={selector} onStepClick={selector} breakpoint="sm">
-                  <Stepper.Step label="課題">
-                  </Stepper.Step>
-                  <Stepper.Step label="解決策の提案" >
-                  </Stepper.Step>
-                  <Stepper.Step label="ドキュメント化" >
-                    
-                  </Stepper.Step>
-                  {/* <Stepper.Completed>
-                    Completed, click back button to get to previous step
-                  </Stepper.Completed> */}
-              </Stepper>
+              <div className="mt-5">
+                <Stepper color="yellow" active={selector} onStepClick={selector} breakpoint="sm">
+                    <Stepper.Step label="課題">
+                    </Stepper.Step>
+                    <Stepper.Step label="解決策の提案" >
+                    </Stepper.Step>
+                    <Stepper.Step label="ドキュメント化" >
+
+                    </Stepper.Step>
+                    {/* <Stepper.Completed>
+                      Completed, click back button to get to previous step
+                    </Stepper.Completed> */}
+                </Stepper>
+              </div>
               </>
             )
 }       
