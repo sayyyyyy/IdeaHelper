@@ -20,6 +20,7 @@ export default function Top() {
 
     const router = useRouter()
     const [message,setMessage] = useState("")
+    const [isLoading, setLoading] = useState(false)
 
     const idea = useSelector(selectIdea);
     const chatList = useSelector(selectChatList)
@@ -37,6 +38,7 @@ export default function Top() {
         const question = message
 
         event.preventDefault();
+        setLoading(true)
         try {
           const response = await fetch("/api/sendChat", {
             method: "POST",
@@ -57,8 +59,9 @@ export default function Top() {
           // 取得データの整形
           dispatch(setChatList([...chatList, {'user': question}, {'openai': data.result}]))
           setMessage('')
+          setLoading(false)
         } catch(error: any) {
-          sendChat(event)
+          setLoading(false)
           console.error(error);
         }
       }
@@ -66,7 +69,13 @@ export default function Top() {
     
     return (
     <>
-
+    {(() => {
+        if (isLoading) {
+            return (
+              <div className='bg-slate-500 w-screen h-screen z-10 fixed'></div>
+            )
+        }
+    })()}
     <div style={{position:"fixed" ,backgroundColor:"#FFFFFF",width:"100%",height:120 ,zIndex:1 ,marginTop:-20}}>
       <header style={{backgroundColor:"#FCC419",width:"86%",display:"flex",height:80,position:"fixed",zIndex:2,marginTop:20}}>
         <Center style={{width:"100%"}}>
