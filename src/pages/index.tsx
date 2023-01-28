@@ -15,66 +15,82 @@ import { selectTitleList,addTitleList } from '@/redux/titleListSlice'
 import { useRouter } from "next/router";
 
 export default function Home() {
-  const dispatch = useDispatch();
-  const { increment,decrement } = counterSlice.actions;
-  const [text,setText] = useState("")
-  const router = useRouter()
-  const ideaList = useSelector(selectIdeaList);
-  const TitleList = useSelector(selectTitleList);
+	const dispatch = useDispatch();
+	const { increment,decrement } = counterSlice.actions;
+	const [text,setText] = useState("")
+	const router = useRouter()
+	const ideaList = useSelector(selectIdeaList);
+	const TitleList = useSelector(selectTitleList);
 
-  async function onSubmit(event: any) {
-    dispatch(addTitleList(text))
-    let errorCount = 0
-    event.preventDefault();
-    try {
-      const response = await fetch("/api/generateIdea", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ problem : text }),
-      });
+	const [isLoading, setLoading] = useState(false)
 
-      const data = await response.json();
-      if (response.status !== 200) {
-        console.log(data.error)
-        return 
-      }
+	async function onSubmit(event: any) {
+		dispatch(addTitleList(text))
+		let errorCount = 0
+		event.preventDefault();
+		// ローディング開始
+		setLoading(true)
 
-      // 取得データの整形
-      const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '').split(',')
-      const changeArray = []
-      for (const formatIdea of formatIdeaList) {
-        changeArray.push(JSON.parse(formatIdea).idea)
-      }
+		try {
+		const response = await fetch("/api/generateIdea", {
+			method: "POST",
+			headers: {
+			"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ problem : text }),
+		});
 
-      dispatch(setIdeaList(changeArray))
-	  dispatch(increment())
-      router.push("/solve");
-    } catch(error: any) {
-      errorCount++
-      onSubmit(event)
+		const data = await response.json();
+		if (response.status !== 200) {
+			console.log(data.error)
+			return 
+		}
 
-      console.error(error);
-    } finally {
-    }
-  }
+		// 取得データの整形
+		const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '').split(',')
+		const changeArray = []
+		for (const formatIdea of formatIdeaList) {
+			changeArray.push(JSON.parse(formatIdea).idea)
+		}
 
-  return (
-    <>
-      <Stepbar />
+		dispatch(setIdeaList(changeArray))
+		dispatch(increment())
+		
+		// ローディング終了
+		setLoading(false)
 
-        <br />
-        <h1 className ="flex justify-center mt-20 font-bold" >あなたが解決したい課題を教えてください</h1>
-        <div className="flex justify-center mt-5">
-            <input className=" mt-1 shadow appearance-none border rounded h-14 w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" value={text} onChange={(event)=>setText(event.target.value)}/>
-        </div>
+		router.push("/solve");
+		} catch(error: any) {
+		errorCount++
+		onSubmit(event)
 
-        <Group position="center" mt={100}>
-            <Button onClick={onSubmit} variant="filled" color="yellow" size="md">
-              解決策の提案
-            </Button>
-        </Group>
-    </>
-  )
+		console.error(error);
+		} finally {
+		}
+	}
+
+	return (
+		<>
+            {(() => {
+                if (isLoading) {
+                    return (
+						<div className='bg-slate-500 w-screen h-screen z-10 fixed '></div>
+                    )
+                }
+            })()}
+			<Stepbar />
+
+			<br />
+			<h1 className ="flex justify-center mt-20 font-bold" >あなたが解決したい課題を教えてください</h1>
+			<div className="flex justify-center mt-5">
+				<input className=" mt-1 shadow appearance-none border rounded h-14 w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" value={text} onChange={(event)=>setText(event.target.value)}/>
+			</div>
+
+			<Group position="center" mt={100}>
+				<Button onClick={onSubmit} variant="filled" color="yellow" size="md">
+					解決策の提案
+				</Button>
+			</Group>
+		</>
+	)
 }

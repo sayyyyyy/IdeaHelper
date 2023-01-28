@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { selectIdea } from '@/redux/ideaSlice'
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,8 @@ export default function Document() {
     const chatList = useSelector(selectChatList)
     // console.log(chatList)
 
+    const [isLoading, setLoading] = useState(false)
+
     const questionList = [
         {question: `${idea}のアプリ名を正確な文章で提案してください。`, questionText: 'アプリ名案'},
         {question: `${idea}のターゲットを正確な文章で提案してください。`, questionText: 'ターゲット案'},
@@ -21,6 +23,7 @@ export default function Document() {
     ]
 
     async function createDocument() {
+        setLoading(true)
 		try {
 			const response = await fetch("/api/createDocument", {
                 method: "POST",
@@ -36,8 +39,9 @@ export default function Document() {
 			}
 
 			dispatch(setDocument(data.result)) 
-	
+            setLoading(false)
 		} catch(error: any) {
+            setLoading(false)
 			console.error(error);
 		}
 	}
@@ -54,6 +58,13 @@ export default function Document() {
 	}
     return (
         <>
+            {(() => {
+                if (isLoading) {
+                    return (
+						<div className='bg-slate-500 w-screen h-screen z-10 fixed '></div>
+                    )
+                }
+            })()}
             <h1>ドキュメント化</h1>
             <button onClick={createDocument}>生成する</button>
             {(() => {
