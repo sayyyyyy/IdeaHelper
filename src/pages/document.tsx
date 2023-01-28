@@ -68,6 +68,39 @@ export default function Document() {
 			  console.log('コピーに失敗しました')
 			});
 	}
+
+    const copyTextToMarkdown = () => {
+        let stringDocument = ''
+        console.log(document)
+        console.log(chatList)
+
+        if (idea) {
+            stringDocument += `# ${idea}\n`
+        }
+
+        if (document.length !== 0) {
+            for (const context of document) {
+                stringDocument += `## ${context.question}\n${context.answer}\n\n`
+    
+            }
+        }
+
+        stringDocument += '\n\n'
+        if (chatList.length !== 0) {
+            stringDocument += '## メモ\n'
+            for (const chat of chatList) {
+                stringDocument += `${Object.keys(chat)[0]}: ${Object.values(chat)[0]}\n`
+            }
+        }
+		navigator.clipboard.writeText(stringDocument).then(
+			() => {
+			  console.log('コピーしました')
+			},
+			() => {
+			  console.log('コピーに失敗しました')
+			});
+	}
+
     return (
         <>
             <h1>ドキュメント化</h1>
@@ -106,6 +139,7 @@ export default function Document() {
                 }
             })()}
             <button onClick={copyText}>COPY</button>
+            <button onClick={copyTextToMarkdown}>Markdown Copy</button>
         </>
     )
 }
