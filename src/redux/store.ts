@@ -3,6 +3,7 @@ import { counterSlice } from "./counterSlice";
 import {ideaListSlice} from "./idealistSlice"
 import { ideaSlice } from "./ideaSlice";
 import { titleListSlice } from "./titleListSlice";
+import { chatListSlice } from "./chatListSlice";
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,6 @@ export const store = configureStore({
       ideaListReducer: ideaListSlice.reducer,
       ideaReducer: ideaSlice.reducer,
       titleListReducer: titleListSlice.reducer,
-
+      chatListReducer: chatListSlice.reducer
     },
 });
