@@ -8,10 +8,10 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { counterSlice, CounterState,selectCount } from "../redux/counterSlice";
 import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex  } from '@mantine/core';
-import {IconExternalLink } from '@tabler/icons';
 
 import { selectIdea } from '@/redux/ideaSlice';
 import { setChatList, selectChatList } from '@/redux/chatListSlice';
+import { FileText } from 'tabler-icons-react';
 
 export default function Top() {
     const dispatch = useDispatch();
@@ -79,14 +79,20 @@ export default function Top() {
     <div style={{position:"fixed" ,backgroundColor:"#FFFFFF",width:"100%",height:120 ,zIndex:1 ,marginTop:-20}}>
       <header style={{backgroundColor:"#FCC419",width:"86%",display:"flex",height:80,position:"fixed",zIndex:2,marginTop:20}}>
         <Center style={{width:"100%"}}>
-          <Button variant="light" color="yellow" size="md" onClick={moveBack} style={{marginLeft: "-40%",marginRight:"40%"}}> ＜ </Button>
-          <h1 className='text-white font-bold ' >{idea}</h1>
+          <Button variant="light" color="yellow" size="md" onClick={moveBack} style={{marginLeft: 20,marginRight:"30%",position:"absolute", left: 0}}> ＜ </Button>
+          <h1 className='text-white font-bold text-center' >{idea}</h1>
+          <button onClick={moveDucumet} style={{backgroundColor:"#FCC419",color:"white" ,position:"absolute",right: 0,marginRight: 30}}>
+            <FileText
+              size={52}
+              strokeWidth={2}
+            />
+          </button>
         </Center>
       </header>
     </div>
       
 
-      <ScrollArea style={{ height: "70%",}}>
+      <ScrollArea style={{ height: "70%",marginTop:50}}>
         {
             chatList.map((chat) =>
                 {if (Object.keys(chat)[0] == 'user') {
@@ -132,7 +138,7 @@ export default function Top() {
 
       </ScrollArea>
 
-      <Center style={{display:'flex' ,bottom: "0",position:"fixed",marginBottom:10, backgroundColor:"white",justifyContent:"center",width:"100%"}}>
+      <Center style={{display:'flex' ,bottom: "0",position:"fixed",marginBottom:10, backgroundColor:"white",justifyContent:"center",width:"100%",marginLeft:"-10%"}}>
           <Textarea
           placeholder="メッセージを記入してください"
           withAsterisk
@@ -141,7 +147,6 @@ export default function Top() {
           onChange={(event) => setMessage(event.currentTarget.value)}
           />
           <Button variant="light" color="yellow.7" size="md" onClick={sendChat} style={{backgroundColor:"#FAB005",color:"white"}}>送信</Button>
-          <button onClick={moveDucumet}>ドキュメントへ</button>
       </Center>
 
     </>
