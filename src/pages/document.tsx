@@ -8,7 +8,7 @@ import { selectDocument, setDocument } from '@/redux/documentSlice';
 import { selectChatList } from '@/redux/chatListSlice';
 import Stepbar from '@/components/stepbar'
 
-import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex,Grid,Card, LoadingOverlay  } from '@mantine/core';
+import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex,Grid,Card, LoadingOverlay, Popover,   } from '@mantine/core';
 import { Copy,Code,FileDownload } from 'tabler-icons-react';
 import { Margarine } from '@next/font/google';
 import { Alert } from '@mantine/core';
@@ -22,12 +22,13 @@ export default function Document() {
     const chatList = useSelector(selectChatList)
     const [isLoading, setLoading] = useState(false)
     const [copy,setCopy] =useState(false)
+    const [ existDocument, setexistDocument ] = useState(false)
 
     const questionList = [
         {question: `${idea}のアプリ名を正確な文章で提案してください。`, questionText: 'アプリ名案'},
         {question: `${idea}のターゲットを正確な文章で提案してください。`, questionText: 'ターゲット案'},
-        // {question: `${idea}の機能一覧を教えて`, questionText: '機能一覧案'},
-        // {question: `${idea}の画面一覧を教えて`, questionText: '画面一覧案'},
+        {question: `${idea}の機能一覧を教えてください。`, questionText: '機能一覧案'},
+        {question: `${idea}の画面一覧を教えてください。`, questionText: '画面一覧案'},
     ]
 
     async function createDocument() {
@@ -48,13 +49,15 @@ export default function Document() {
 
 			dispatch(setDocument(data.result)) 
             setLoading(false)
+            setexistDocument(true)
 		} catch(error: any) {
             setLoading(false)
 			console.error(error);
 		}
 	}
 
-	const copyText = (text: string) => {
+	const copyText = (text: string, event: any) => {
+        console.log(event)
         navigator.clipboard.writeText(text).then(
 			() => {
 			  console.log('コピーしました')
@@ -158,7 +161,7 @@ export default function Document() {
             <Card shadow="sm" p="lg" radius="md" withBorder style={{marginTop:30,width:"80%"}}>
                 <div id='to-pdf'>
                     {(() => {
-                        if (documentList.length !== 0) {
+                        if (documentList.length !== 0 && existDocument) {
                             return (
                                 documentList.map((idea: {question: string, answer: string}) => (		
                                     <>  
@@ -172,12 +175,11 @@ export default function Document() {
                                         </div>
                                     </>
                                 ))
-
                             )
                         }
                     })()}
                     {(() => {
-                        if (chatList.length !== 0) {
+                        if (chatList.length !== 0 && existDocument) {
                             return (
                                 <>
                                 <Card.Section style={{marginLeft:20,marginRight:20,marginTop:20}}>
@@ -189,6 +191,7 @@ export default function Document() {
                                         <>
                                             
                                             <span>{Object.keys(chat)[0]}</span>
+                                            <span>：</span>
                                             <span>{Object.values(chat)[0]}</span>
                                             <br />
                                         </>
@@ -202,51 +205,63 @@ export default function Document() {
             </Card>
             </Center>
         
-            <Center style={{backgroundColor:"white" ,marginTop:100}}>
-            <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50} >
-                <Grid.Col span={4}>
-                    <Button style={{borderColor:"2px solid #FCC419",backgroundColor:"white",width:70,height:70,borderRadius:"50%"}} onClick={() => copyText(conversionToText())}>
-                        <Copy
-                            size={56}
-                            strokeWidth={2}
-                            color={'#FCC419'}
-                        />
-                    </Button>
-                    <Center><Text color="gray.5">COPY</Text></Center>
-                </Grid.Col>
-                <Grid.Col span={4}>
-                    <Button style={{borderColor:"2px solid #FCC419" ,width:70,height:70,borderRadius:"50%" ,backgroundColor:"white"}} onClick={() => copyText(conversionToMarkdownText())}>
-                        <Code
-                            size={56}
-                            strokeWidth={2}
-                            color={'#FCC419'}
-                        />
-                    </Button>
-                    <Center><Text color="gray.5">MARKDOWN</Text></Center>
-                </Grid.Col>
-                <Grid.Col span={4}>
-                    <Button style={{backgroundColor:"white",borderColor:"2px solid #FCC419" ,width:70,height:70,borderRadius:"50%"}} onClick={conversionToPDF}>
-                        <FileDownload
-                            size={56}
-                            strokeWidth={2}
-                            color={'#FCC419'}
-                        />
-                    </Button>
-                    <Center><Text color="gray.5">PDF</Text></Center>
-                </Grid.Col>
-            </Grid>
-            </Center>
-
             
-
-            {/* { (function(){
-                if(copy) {
-                    <Alert color="blue.7">
-                        コピーしました
-                    </Alert>
-                }   
-                })()
-            } */}
+            {(() => {
+                if (existDocument) {
+                    return (
+                        <>
+                            <Center style={{backgroundColor:"white" ,marginTop:100}}>
+                            <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
+                                <Grid.Col span={4}>
+                                    <Popover width={200} position="bottom" withArrow shadow="md">
+                                        <Popover.Target>
+                                            <Button style={{borderColor:"2px solid #FCC419",backgroundColor:"white",width:70,height:70,borderRadius:"50%"}} onClick={(e) => copyText(conversionToText(), e)}>
+                                                <Copy
+                                                    size={56}
+                                                    strokeWidth={2}
+                                                    color={'#FCC419'}
+                                                />
+                                            </Button>
+                                        </Popover.Target>
+                                        <Popover.Dropdown>
+                                            <Text size="sm">テキストをコピーしました</Text>
+                                        </Popover.Dropdown>
+                                    </Popover>
+                                    <Center><Text color="gray.5">COPY</Text></Center>
+                                </Grid.Col>
+                                <Grid.Col span={4}>
+                                    <Popover width={300} position="bottom" withArrow shadow="md">
+                                        <Popover.Target>
+                                            <Button style={{borderColor:"2px solid #FCC419" ,width:70,height:70,borderRadius:"50%" ,backgroundColor:"white"}} onClick={(e) => copyText(conversionToMarkdownText(), e)}>
+                                                <Code
+                                                    size={56}
+                                                    strokeWidth={2}
+                                                    color={'#FCC419'}
+                                                />
+                                            </Button>
+                                        </Popover.Target>
+                                        <Popover.Dropdown>
+                                            <Text size="sm">Markdownテキストをコピーしました</Text>
+                                        </Popover.Dropdown>
+                                    </Popover>
+                                    <Center><Text color="gray.5">MARKDOWN</Text></Center>
+                                </Grid.Col>
+                                <Grid.Col span={4}>
+                                    <Button style={{backgroundColor:"white",borderColor:"2px solid #FCC419" ,width:70,height:70,borderRadius:"50%"}} onClick={conversionToPDF}>
+                                        <FileDownload
+                                            size={56}
+                                            strokeWidth={2}
+                                            color={'#FCC419'}
+                                        />
+                                    </Button>
+                                    <Center><Text color="gray.5">PDF</Text></Center>
+                                </Grid.Col>
+                            </Grid>
+                            </Center>
+                        </>
+                    )
+                }
+            })()}
         </>
     )
 }

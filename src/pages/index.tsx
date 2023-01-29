@@ -120,7 +120,7 @@ export default function Home() {
 			<br />
 			<h1 className ="flex justify-center mt-20 font-bold" >あなたが解決したい課題を教えてください</h1>
 			<div className="flex justify-center mt-5">
-				<input className=" mt-1 shadow appearance-none border rounded h-14 w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" value={text} onChange={(event)=>setText(event.target.value)}/>
+				<input autoComplete='off' className=" mt-1 shadow appearance-none border rounded h-14 w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" value={text} onChange={(event)=>setText(event.target.value)}/>
 			</div>
 
 			<Group position="center" mt={100}>
@@ -128,9 +128,19 @@ export default function Home() {
 					解決策の提案
 				</Button>
 			</Group>
-			<button onClick={() => {generateIdeaWithoutProblem('面白い')}}>面白い</button>
-			<button onClick={() => {generateIdeaWithoutProblem('便利な')}}>便利</button>
-			<button onClick={() => {generateIdeaWithoutProblem('使いやすい')}}>使いやすい</button>
+			
+			<h2 className='flex justify-center mt-24 font-bold text-3xl'>課題なしで生成</h2>
+			<div className='flex justify-center mt-4'>
+				<Button className='m-4' color="yellow" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('面白い')}}>
+					面白い
+				</Button>
+				<Button className='m-4' color="yellow" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('便利')}}>
+					便利
+				</Button>
+				<Button className='m-4' color="yellow" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('使いやすい')}}>
+					使いやすい
+				</Button>
+			</div>
 		</>
 	)
 }

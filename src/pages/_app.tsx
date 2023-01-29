@@ -1,5 +1,6 @@
 import '@/styles/globals.css'
 import { AppProps } from 'next/app';
+import Head from "next/head";
 import { MantineProvider } from '@mantine/core';
 import { Provider } from 'react-redux';
 import { configureStore, createSlice } from "@reduxjs/toolkit";
@@ -13,6 +14,9 @@ export default function App(props: AppProps) {
   const router = useRouter()
   return (
     <>
+      <Head>
+        <title>Idea Helper</title>
+      </Head>
       <Provider store={store}>
         {/* <Head>
           <title>Page title</title>

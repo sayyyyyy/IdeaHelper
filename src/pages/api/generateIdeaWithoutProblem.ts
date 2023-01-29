@@ -2,6 +2,7 @@ import { callOpenAI } from "@/scripts/callOpenAI";
 
 export default async function (req: any, res: any) {
   const junre = req.body.junre || '';
+  console.log(junre)
   if (junre.trim().length === 0) {
     res.status(400).json({
       error: {
