@@ -8,7 +8,7 @@ import { selectDocument, setDocument } from '@/redux/documentSlice';
 import { selectChatList } from '@/redux/chatListSlice';
 import Stepbar from '@/components/stepbar'
 
-import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex,Grid,Card  } from '@mantine/core';
+import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex,Grid,Card, LoadingOverlay  } from '@mantine/core';
 import { Copy,Code,FileDownload } from 'tabler-icons-react';
 import { Margarine } from '@next/font/google';
 import { Alert } from '@mantine/core';
@@ -139,7 +139,12 @@ export default function Document() {
             {(() => {
                 if (isLoading) {
                     return (
-						<div className='bg-slate-500 w-screen h-screen z-10 fixed '></div>
+						<LoadingOverlay
+							loaderProps={{ size: 'md', color: 'yellow', variant: 'bars' }}
+							overlayOpacity={0.6}
+							overlayColor="#c5c5c5"
+							visible
+						/>
                     )
                 }
             })()}

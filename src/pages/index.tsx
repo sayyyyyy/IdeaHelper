@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import Stepbar from '@/components/stepbar'
-import { AppShell,Stepper, Button, Group } from '@mantine/core';
+import { AppShell,Stepper, Button, Group, LoadingOverlay } from '@mantine/core';
 // import { counterSlice, CounterState, store,selectCount, ideaSlice, selectIdea} from "./_app";
 import { counterSlice } from "../redux/counterSlice";
 import { selectIdeaList, setIdeaList } from "../redux/idealistSlice";
@@ -107,12 +107,16 @@ export default function Home() {
 			{(() => {
 				if (isLoading) {
 					return (
-						<div className='bg-slate-500 w-screen h-screen z-10 fixed '></div>
+						<LoadingOverlay
+							loaderProps={{ size: 'md', color: 'yellow', variant: 'bars' }}
+							overlayOpacity={0.6}
+							overlayColor="#c5c5c5"
+							visible
+						/>
 					)
 				}
 			})()}
 			<Stepbar />
-
 			<br />
 			<h1 className ="flex justify-center mt-20 font-bold" >あなたが解決したい課題を教えてください</h1>
 			<div className="flex justify-center mt-5">
