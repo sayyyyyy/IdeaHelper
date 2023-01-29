@@ -73,7 +73,7 @@ export default function Top() {
       <header style={{backgroundColor:"#FCC419",width:"86%",display:"flex",height:80,position:"fixed",zIndex:2,marginTop:20}}>
         <Center style={{width:"100%"}}>
           <Button variant="light" color="yellow" size="md" onClick={moveBack} style={{marginLeft: 20,marginRight:"30%",position:"absolute", left: 0}}> ＜ </Button>
-          <h1 className='text-white font-bold text-center' >{idea}</h1>
+          <h1 className='text-white font-bold text-center overflow-x-scroll'>{idea}</h1>
           <button onClick={moveDucumet} style={{backgroundColor:"#FCC419",color:"white" ,position:"absolute",right: 0,marginRight: 30}}>
             <FileText
               size={52}

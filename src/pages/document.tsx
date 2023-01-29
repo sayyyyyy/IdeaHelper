@@ -163,28 +163,32 @@ export default function Document() {
                     {(() => {
                         if (documentList.length !== 0 && existDocument) {
                             return (
-                                <>
+                                <div style={{marginBottom:26}}>
                                     <Center>
                                         <Card.Section style={{fontWeight:"bold",color:"#FCC419"}}><h1>アプリ概要</h1></Card.Section>
                                     </Center>
                                     <Center style={{marginLeft:30,marginRight:30}}>
                                         <Card.Section><h3>{idea}</h3></Card.Section>
-                                    </Center> 
-                                    {(() => {
-                                        documentList.map((idea: {question: string, answer: string}) => (		
-                                            <>  
-                                                <div style={{marginBottom:26}}>
-                                                    <Center>
-                                                        <Card.Section style={{fontWeight:"bold",color:"#FCC419"}}><h1>{idea.question}</h1></Card.Section>
-                                                    </Center>
-                                                    <Center style={{marginLeft:30,marginRight:30}}>
-                                                        <Card.Section><h3>{idea.answer}</h3></Card.Section>
-                                                    </Center> 
-                                                </div>
-                                            </>
-                                        ))
-                                    })()}
-                                </>
+                                    </Center>
+                                </div>
+                            )
+                        }
+                    })()}
+                    {(() => {
+                        if (documentList.length !== 0 && existDocument) {
+                            return (
+                                documentList.map((idea: {question: string, answer: string}) => (		
+                                    <>  
+                                        <div style={{marginBottom:26}}>
+                                            <Center>
+                                                <Card.Section style={{fontWeight:"bold",color:"#FCC419"}}><h1>{idea.question}</h1></Card.Section>
+                                            </Center>
+                                            <Center style={{marginLeft:30,marginRight:30}}>
+                                                <Card.Section><h3>{idea.answer}</h3></Card.Section>
+                                            </Center> 
+                                        </div>
+                                    </>
+                                ))
                             )
                         }
                     })()}
