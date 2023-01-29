@@ -227,38 +227,42 @@ export default function Document() {
                             <Center style={{backgroundColor:"white" ,marginTop:100}}>
                             <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
                                 <Grid.Col span={4}>
-                                    <Popover width={200} position="bottom" withArrow shadow="md">
-                                        <Popover.Target>
-                                            <Button style={{borderColor:"2px solid #FCC419",backgroundColor:"white",width:70,height:70,borderRadius:"50%"}} onClick={(e) => copyText(conversionToText(), e)}>
-                                                <Copy
-                                                    size={56}
-                                                    strokeWidth={2}
-                                                    color={'#FCC419'}
-                                                />
-                                            </Button>
-                                        </Popover.Target>
-                                        <Popover.Dropdown>
-                                            <Text size="sm">テキストをコピーしました</Text>
-                                        </Popover.Dropdown>
-                                    </Popover>
-                                    <Center><Text color="gray.5">COPY</Text></Center>
+                                    <div onClick={(e) => copyText(conversionToText(), e)}>
+                                        <Popover width={200} position="bottom" withArrow shadow="md">
+                                            <Popover.Target>
+                                                <Button style={{borderColor:"2px solid #FCC419",backgroundColor:"white",width:70,height:70,borderRadius:"50%"}}>
+                                                    <Copy
+                                                        size={56}
+                                                        strokeWidth={2}
+                                                        color={'#FCC419'}
+                                                    />
+                                                </Button>
+                                            </Popover.Target>
+                                            <Popover.Dropdown>
+                                                <Text size="sm">テキストをコピーしました</Text>
+                                            </Popover.Dropdown>
+                                        </Popover>
+                                        <Center><Text color="gray.5">COPY</Text></Center>
+                                    </div>
                                 </Grid.Col>
                                 <Grid.Col span={4}>
-                                    <Popover width={300} position="bottom" withArrow shadow="md">
-                                        <Popover.Target>
-                                            <Button style={{borderColor:"2px solid #FCC419" ,width:70,height:70,borderRadius:"50%" ,backgroundColor:"white"}} onClick={(e) => copyText(conversionToMarkdownText(), e)}>
-                                                <Code
-                                                    size={56}
-                                                    strokeWidth={2}
-                                                    color={'#FCC419'}
-                                                />
-                                            </Button>
-                                        </Popover.Target>
-                                        <Popover.Dropdown>
-                                            <Text size="sm">Markdownテキストをコピーしました</Text>
-                                        </Popover.Dropdown>
-                                    </Popover>
-                                    <Center><Text color="gray.5">MARKDOWN</Text></Center>
+                                    <div onClick={(e) => copyText(conversionToMarkdownText(), e)}>
+                                        <Popover width={300} position="bottom" withArrow shadow="md">
+                                            <Popover.Target>
+                                                <Button style={{borderColor:"2px solid #FCC419" ,width:70,height:70,borderRadius:"50%" ,backgroundColor:"white"}}>
+                                                    <Code
+                                                        size={56}
+                                                        strokeWidth={2}
+                                                        color={'#FCC419'}
+                                                    />
+                                                </Button>
+                                            </Popover.Target>
+                                            <Popover.Dropdown>
+                                                <Text size="sm">Markdownテキストをコピーしました</Text>
+                                            </Popover.Dropdown>
+                                        </Popover>
+                                        <Center><Text color="gray.5">MARKDOWN</Text></Center>
+                                    </div>
                                 </Grid.Col>
                                 <Grid.Col span={4}>
                                     <Button style={{backgroundColor:"white",borderColor:"2px solid #FCC419" ,width:70,height:70,borderRadius:"50%"}} onClick={conversionToPDF}>
