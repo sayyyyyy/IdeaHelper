@@ -129,11 +129,11 @@ export default function Document() {
             console.log('error2')
             return};
 
-        html2canvas(target, { scale: 2.5 }).then((canvas) => {
+        html2canvas(target, { scale: 3.9 }).then((canvas) => {
             const imgData = canvas.toDataURL('image/svg', 1.0);
             let pdf = new jsPDF();
             pdf.addImage(imgData, 'SVG', 5, 10, canvas.width / 18, canvas.height / 18);
-            pdf.save(`test.pdf`);
+            pdf.save(`${idea}.pdf`);
         });
     }
     return (
@@ -163,18 +163,28 @@ export default function Document() {
                     {(() => {
                         if (documentList.length !== 0 && existDocument) {
                             return (
-                                documentList.map((idea: {question: string, answer: string}) => (		
-                                    <>  
-                                        <div style={{marginBottom:26}}>
-                                            <Center>
-                                                <Card.Section style={{fontWeight:"bold",color:"#FCC419"}}><h1>{idea.question}</h1></Card.Section>
-                                            </Center>
-                                            <Center style={{marginLeft:30,marginRight:30}}>
-                                                <Card.Section><h3>{idea.answer}</h3></Card.Section>
-                                            </Center> 
-                                        </div>
-                                    </>
-                                ))
+                                <>
+                                    <Center>
+                                        <Card.Section style={{fontWeight:"bold",color:"#FCC419"}}><h1>アプリ概要</h1></Card.Section>
+                                    </Center>
+                                    <Center style={{marginLeft:30,marginRight:30}}>
+                                        <Card.Section><h3>{idea}</h3></Card.Section>
+                                    </Center> 
+                                    {(() => {
+                                        documentList.map((idea: {question: string, answer: string}) => (		
+                                            <>  
+                                                <div style={{marginBottom:26}}>
+                                                    <Center>
+                                                        <Card.Section style={{fontWeight:"bold",color:"#FCC419"}}><h1>{idea.question}</h1></Card.Section>
+                                                    </Center>
+                                                    <Center style={{marginLeft:30,marginRight:30}}>
+                                                        <Card.Section><h3>{idea.answer}</h3></Card.Section>
+                                                    </Center> 
+                                                </div>
+                                            </>
+                                        ))
+                                    })()}
+                                </>
                             )
                         }
                     })()}
