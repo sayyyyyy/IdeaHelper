@@ -1,18 +1,27 @@
 import '@/styles/globals.css'
 import { AppProps } from 'next/app';
+import Head from "next/head";
 import { MantineProvider } from '@mantine/core';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { AppShell,Navbar, Footer, Header,Text,Stepper, Button, Group } from '@mantine/core';
 import { store } from '@/redux/store';
 import { useRouter } from "next/router";
 
+import { selectIdea } from '@/redux/ideaSlice'
+
+import { Sidebar } from '@/components/sidebar';
+
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
   const router = useRouter()
+  
   return (
     <>
+      <Head>
+        <title>Idea Helper</title>
+      </Head>
       <Provider store={store}>
         {/* <Head>
           <title>Page title</title>
@@ -28,19 +37,7 @@ export default function App(props: AppProps) {
           }}
         >
           <AppShell padding="md" 
-            navbar={
-              <Navbar width={{base:200}} style={{backgroundColor:"#FFFEF9"}}>
-                <Navbar.Section  mt="md" >IdeaHelper</Navbar.Section>
-                <hr />
-                <Navbar.Section  mt="md">地球温暖化</Navbar.Section>
-                <Navbar.Section  mt="md">
-                  <Button variant="light" color="yellow" mt="md" ml="md" radius="md" onClick={() => router.push("/")}>
-                      ＋
-                  </Button>
-                </Navbar.Section>
-              </Navbar>
-              
-            } 
+            navbar={<Navbar width={{base:200}} style={{backgroundColor:"#FFFEF9"}}><Sidebar></Sidebar></Navbar>} 
           >
             <Component {...pageProps}/>
           </AppShell>

@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
 import { counterSlice, CounterState,selectCount } from "../redux/counterSlice";
-import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex  } from '@mantine/core';
+import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex, LoadingOverlay  } from '@mantine/core';
 
 import { selectIdea } from '@/redux/ideaSlice';
 import { setChatList, selectChatList } from '@/redux/chatListSlice';
@@ -69,18 +69,11 @@ export default function Top() {
     
     return (
     <>
-    {(() => {
-        if (isLoading) {
-            return (
-              <div className='bg-slate-500 w-screen h-screen z-10 fixed'></div>
-            )
-        }
-    })()}
     <div style={{position:"fixed" ,backgroundColor:"#FFFFFF",width:"100%",height:120 ,zIndex:1 ,marginTop:-20}}>
       <header style={{backgroundColor:"#FCC419",width:"86%",display:"flex",height:80,position:"fixed",zIndex:2,marginTop:20}}>
         <Center style={{width:"100%"}}>
           <Button variant="light" color="yellow" size="md" onClick={moveBack} style={{marginLeft: 20,marginRight:"30%",position:"absolute", left: 0}}> ＜ </Button>
-          <h1 className='text-white font-bold text-center' >{idea}</h1>
+          <h1 className='text-white font-bold text-center overflow-x-scroll'>{idea}</h1>
           <button onClick={moveDucumet} style={{backgroundColor:"#FCC419",color:"white" ,position:"absolute",right: 0,marginRight: 30}}>
             <FileText
               size={52}
@@ -146,7 +139,20 @@ export default function Top() {
           value={message}
           onChange={(event) => setMessage(event.currentTarget.value)}
           />
-          <Button variant="light" color="yellow.7" size="md" onClick={sendChat} style={{backgroundColor:"#FAB005",color:"white"}}>送信</Button>
+          <Button variant="light" color="yellow.7" size="md" onClick={sendChat} style={{backgroundColor:"#FAB005",color:"white"}}>
+          {(() => {
+            if (isLoading) {
+                return (
+                  <LoadingOverlay
+                    loaderProps={{ size: 'md', color: 'yellow', variant: 'oval' }}
+                    visible
+                  />
+                )
+            } else {
+              return '送信'
+            }
+        })()}
+          </Button>
       </Center>
 
     </>
