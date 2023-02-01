@@ -1,14 +1,14 @@
+//ライブラリインポート
 import '@/styles/globals.css'
 import { AppProps } from 'next/app';
 import Head from "next/head";
-import { MantineProvider } from '@mantine/core';
-import { Provider, useDispatch, useSelector } from 'react-redux';
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { AppShell,Navbar, Footer, Header,Text,Stepper, Button, Group } from '@mantine/core';
+import { AppShell,Navbar } from '@mantine/core';
 import { store } from '@/redux/store';
 import { useRouter } from "next/router";
 
-import { selectIdea } from '@/redux/ideaSlice'
+// 環境変数
+import { MantineProvider } from '@mantine/core';
+import { Provider } from 'react-redux';
 
 import { Sidebar } from '@/components/sidebar';
 
@@ -23,10 +23,6 @@ export default function App(props: AppProps) {
         <title>Idea Helper</title>
       </Head>
       <Provider store={store}>
-        {/* <Head>
-          <title>Page title</title>
-          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-        </Head> */}
 
         <MantineProvider
           withGlobalStyles
