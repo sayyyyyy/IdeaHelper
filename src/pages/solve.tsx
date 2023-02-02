@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { selectIdeaList, setIdeaList } from "../redux/idealistSlice";
 import { selectTitleList,addTitleList } from '@/redux/titleListSlice'
 
-export default function solve() {
+export default function Solve() {
   const dispatch = useDispatch();
   const selector = useSelector(selectCount);
   const { increment,decrement } = counterSlice.actions;

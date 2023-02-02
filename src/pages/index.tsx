@@ -1,28 +1,31 @@
-import Head from 'next/head'
-import Image from 'next/image'
+// ライブラリインポート
 import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
 import { useState } from 'react'
+import { Button, Group, LoadingOverlay } from '@mantine/core';
+import { useRouter } from "next/router";
+
+// 環境変数
 import { useDispatch, useSelector } from "react-redux";
-import Stepbar from '@/components/stepbar'
-import { AppShell,Stepper, Button, Group, LoadingOverlay } from '@mantine/core';
-// import { counterSlice, CounterState, store,selectCount, ideaSlice, selectIdea} from "./_app";
 import { counterSlice } from "../redux/counterSlice";
 import { selectIdeaList, setIdeaList } from "../redux/idealistSlice";
 import { selectTitleList,addTitleList } from '@/redux/titleListSlice'
-import { useRouter } from "next/router";
+
+// コンポーネントインポート
+import Stepbar from '@/components/stepbar'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
 	const dispatch = useDispatch();
 	const { increment,decrement } = counterSlice.actions;
-	const [text,setText] = useState("")
-	const router = useRouter()
 	const ideaList = useSelector(selectIdeaList);
 	const TitleList = useSelector(selectTitleList);
 
+	const [text,setText] = useState("")
 	const [isLoading, setLoading] = useState(false)
+
+	const router = useRouter()
+	
 
 	async function generateIdea(event: any) {
 		dispatch(addTitleList(text))
@@ -40,7 +43,7 @@ export default function Home() {
 
 			const data = await response.json();
 			if (response.status !== 200) {
-				console.log(data.error)
+				console.error(data.error)
 				return 
 			}
 
@@ -58,9 +61,9 @@ export default function Home() {
 			setLoading(false)
 			router.push("/solve");
 		} catch(error: any) {
+			// 毎回正しい形式でレスポンスが返ってくる訳ではないので、再起している
 			errorCount++
 			generateIdea(event)
-
 			console.error(error);
 		}
 	}
@@ -94,8 +97,10 @@ export default function Home() {
 			dispatch(setIdeaList(changeArray))
 			dispatch(increment())
 			setLoading(false)
+			
 			router.push("/solve");
 		} catch(error: any) {
+			// 毎回正しい形式でレスポンスが返ってくる訳ではないので、再起している
 			errorCount++
 			generateIdea(junre)
 			setLoading(false)
