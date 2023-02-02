@@ -204,9 +204,9 @@ export default function Document() {
                                         chatList.map((chat: {[speaker: string]: string}) => (
                                         <>
                                             
-                                            <span>{Object.keys(chat)[0]}</span>
+                                            <span>{chat.sender}</span>
                                             <span>：</span>
-                                            <span>{Object.values(chat)[0]}</span>
+                                            <span>{chat.data}</span>
                                             <br />
                                         </>
                                     ))}

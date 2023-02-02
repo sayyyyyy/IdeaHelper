@@ -1,29 +1,27 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+// ライブラリインポート
 import { useState } from 'react';
 import { useRouter } from "next/router";
-
-import { useDispatch, useSelector } from "react-redux";
-import { counterSlice, CounterState,selectCount } from "../redux/counterSlice";
-import { Textarea,Avatar,Button,ScrollArea, Group,Text, Paper,Header,Center, Flex, LoadingOverlay  } from '@mantine/core';
-
-import { selectIdea } from '@/redux/ideaSlice';
-import { setChatList, selectChatList } from '@/redux/chatListSlice';
+import { Textarea, Avatar, Button, ScrollArea, Group, Text, Paper ,Center, LoadingOverlay  } from '@mantine/core';
 import { FileText } from 'tabler-icons-react';
 
+// 環境変数
+import { useDispatch, useSelector } from "react-redux";
+import { counterSlice, selectCount } from "../redux/counterSlice";
+import { selectIdea } from '@/redux/ideaSlice';
+import { setChatList, selectChatList } from '@/redux/chatListSlice';
+
 export default function Top() {
+	// 環境変数
     const dispatch = useDispatch();
     const selector = useSelector(selectCount);
-    const { increment,decrement } = counterSlice.actions;
+    const { increment } = counterSlice.actions;
+    const idea = useSelector(selectIdea);
+    const chatList = useSelector(selectChatList)
 
-    const router = useRouter()
     const [message,setMessage] = useState("")
     const [isLoading, setLoading] = useState(false)
 
-    const idea = useSelector(selectIdea);
-    const chatList = useSelector(selectChatList)
+	const router = useRouter()
 
     const moveBack=()=>{
       router.push("/solve")
@@ -53,11 +51,8 @@ export default function Top() {
             console.log(data.error)
             return
           }
-          
-          console.log(data.result)
     
-          // 取得データの整形
-          dispatch(setChatList([...chatList, {'user': question}, {'openai': data.result}]))
+          dispatch(setChatList([...chatList, {'sender': 'user', 'data': question}, {'sender': 'openai', 'data': data.result}]))
           setMessage('')
           setLoading(false)
         } catch(error: any) {
@@ -87,16 +82,16 @@ export default function Top() {
 
       <ScrollArea style={{ height: "70%",marginTop:50}}>
         {
-            chatList.map((chat) =>
-                {if (Object.keys(chat)[0] == 'user') {
+            chatList.map((chat: any) =>
+                {if (chat.sender == 'user') {
                     return (
                       <>
-                        <div key={Object.values(chat)[0]}>
+                        <div key={chat.data}>
                           <Group style={{ marginTop: 50 ,marginBottom:50,display:'flex',justifyContent: "flex-end",color:"pink"}}>
                             <div style={{ width: 400,backgroundColor:"yellow"}} >
                               <Paper shadow="xs" p="md" color="yellow">
                                 <Text >
-                                {Object.values(chat)[0]}
+                                {chat.data}
                                 </Text>
                               </Paper>
                             </div>
@@ -108,13 +103,13 @@ export default function Top() {
                     return (
                       // <p key={Object.values(chat)[0]} className=''>{Object.values(chat)[0]}</p>
                       <>
-                        <div key={Object.values(chat)[0]}>
+                        <div key={chat.sender}>
                           <Group style={{ marginTop: 50}}>
                             <Avatar radius="xl" />
                             <div style={{ width: 400}} >
                               <Paper shadow="xs" p="md" color="yellow">
                                 <Text color="yellow">
-                                {Object.values(chat)[0]}
+                                {chat.data}
                                 </Text>
                               </Paper>
                             </div>
