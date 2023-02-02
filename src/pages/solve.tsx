@@ -37,7 +37,6 @@ export default function Solve() {
 		<>
 		<Stepbar />
 
-		
 		<div style={{ justifyContent:"center",display:'flex',marginTop:20}} >
 			{ideaList.map((idea:string ,index:number) =>{
 				return(
