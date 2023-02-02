@@ -1,11 +1,13 @@
-import { selectIdea } from "@/redux/ideaSlice";
-import { Button, Navbar } from "@mantine/core";
+// ライブラリインポート
 import router from "next/router";
+import { Button, Navbar } from "@mantine/core";
+
+// 状態管理
 import { useDispatch, useSelector } from "react-redux";
+import { selectIdea } from "@/redux/ideaSlice";
 
 
 export const Sidebar = () => {
-    const dispatch = useDispatch();
     const idea = useSelector(selectIdea);
     
     return(
