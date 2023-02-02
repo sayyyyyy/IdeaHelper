@@ -1,16 +1,16 @@
+// ライブラリインポート
 import { createSlice } from '@reduxjs/toolkit';
 
 export const titleListSlice = createSlice({
-  name: 'titleList',
-  initialState: {
-    titleList: [],
-  },
-  reducers: {
-    addTitleList: (state:any, action) => {
-      state.titleList.push(action.payload)
-      console.log(state)
-    },
-  },
+	name: 'titleList',
+	initialState: {
+		titleList: [],
+	},
+	reducers: {
+		addTitleList: (state:any, action) => {
+			state.titleList.push(action.payload)
+		},
+	},
 });
 
 //アクションの設定

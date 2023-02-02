@@ -1,16 +1,16 @@
+// ライブラリインポート
 import { createSlice } from '@reduxjs/toolkit';
 
 export const ideaSlice = createSlice({
-  name: 'idea',
-  initialState: {
-    idea: '',
-  },
-  reducers: {
-    setIdea: (state, action) => {
-        console.log(action.payload)
-      state.idea = action.payload;
-    },
-  },
+	name: 'idea',
+	initialState: {
+		idea: '',
+	},
+	reducers: {
+		setIdea: (state, action) => {
+			state.idea = action.payload;
+		},
+	},
 });
 
 //アクションの設定
