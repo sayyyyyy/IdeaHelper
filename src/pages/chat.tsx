@@ -1,0 +1,151 @@
+// ライブラリインポート
+import { useState } from 'react';
+import { useRouter } from "next/router";
+import { Textarea, Avatar, Button, ScrollArea, Group, Text, Paper ,Center, LoadingOverlay  } from '@mantine/core';
+import { FileText } from 'tabler-icons-react';
+
+// 環境変数
+import { useDispatch, useSelector } from "react-redux";
+import { counterSlice, selectCount } from "../redux/counterSlice";
+import { selectIdea } from '@/redux/ideaSlice';
+import { setChatList, selectChatList } from '@/redux/chatListSlice';
+
+export default function Top() {
+	// 環境変数
+    const dispatch = useDispatch();
+    const selector = useSelector(selectCount);
+    const { increment } = counterSlice.actions;
+    const idea = useSelector(selectIdea);
+    const chatList = useSelector(selectChatList)
+
+    const [message,setMessage] = useState("")
+    const [isLoading, setLoading] = useState(false)
+
+	const router = useRouter()
+
+    const moveBack=()=>{
+      	router.push("/solve")
+    }
+
+	const moveDucumet=()=>{
+		dispatch(increment());
+		router.push("/document");
+	}
+
+	async function sendChat(event: any) {
+		const question = message
+
+		event.preventDefault();
+		setLoading(true)
+		try {
+			const response = await fetch("/api/sendChat", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ idea: idea, question : question }),
+			});
+
+			const data = await response.json();
+			if (response.status !== 200) {
+			console.log(data.error)
+			return
+			}
+
+			dispatch(setChatList([...chatList, {'sender': 'user', 'data': question}, {'sender': 'openai', 'data': data.result}]))
+			setMessage('')
+			setLoading(false)
+		} catch(error: any) {
+			setLoading(false)
+			console.error(error);
+		}
+	}
+   
+    return (
+    <>
+	{/* タイトル */}
+	<div style={{position:"fixed" ,backgroundColor:"#FFFFFF",width:"100%",height:120 ,zIndex:1 ,marginTop:-20}}>
+		<header style={{backgroundColor:"#FCC419",width:"86%",display:"flex",height:80,position:"fixed",zIndex:2,marginTop:20}}>
+			<Center style={{width:"100%"}}>
+				<Button variant="light" color="yellow" size="md" onClick={moveBack} style={{marginLeft: 20,marginRight:"30%",position:"absolute", left: 0}}> ＜ </Button>
+				<h1 className='text-white font-bold text-center overflow-x-scroll'>{idea}</h1>
+				<button onClick={moveDucumet} style={{backgroundColor:"#FCC419",color:"white" ,position:"absolute",right: 0,marginRight: 30}}>
+					<FileText
+						size={52}
+						strokeWidth={2}
+					/>
+				</button>
+			</Center>
+		</header>
+    </div>
+      
+	{/* チャット部分 */}
+	<ScrollArea style={{ height: "70%",marginTop:50}}>
+	{
+		chatList.map((chat: {sender: string, data: string}) =>
+			{if (chat.sender == 'user') {
+				return (
+					<>
+					<div key={chat.data}>
+						<Group style={{ marginTop: 50 ,marginBottom:50,display:'flex',justifyContent: "flex-end",color:"pink"}}>
+						<div style={{ width: 400,backgroundColor:"yellow"}} >
+							<Paper shadow="xs" p="md" color="yellow">
+								<Text >
+								{chat.data}
+								</Text>
+							</Paper>
+						</div>
+						</Group>
+					</div>
+					</>
+				)
+			} else {
+				return (
+					<>
+					<div key={chat.sender}>
+						<Group style={{ marginTop: 50}}>
+						<Avatar radius="xl" />
+						<div style={{ width: 400}} >
+							<Paper shadow="xs" p="md" color="yellow">
+								<Text color="yellow">
+								{chat.data}
+								</Text>
+							</Paper>
+						</div>
+						</Group>
+					
+					</div>
+					</>
+				)
+			}}
+		)
+	}
+	</ScrollArea>
+
+	{/* メッセージ入力 */}
+	<Center style={{display:'flex' ,bottom: "0",position:"fixed",marginBottom:10, backgroundColor:"white",justifyContent:"center",width:"100%",marginLeft:"-10%"}}>
+		<Textarea
+		placeholder="メッセージを記入してください"
+		withAsterisk
+		style={{ width:'50%',marginRight:20}}
+		value={message}
+		onChange={(event) => setMessage(event.currentTarget.value)}
+		/>
+		<Button variant="light" color="yellow.7" size="md" onClick={sendChat} disabled={isLoading} style={{backgroundColor:"#FAB005",color:"white"}}>
+			{(() => {
+				if (isLoading) {
+					return (
+						<LoadingOverlay
+						loaderProps={{ size: 'md', color: 'yellow', variant: 'oval' }}
+						visible
+						/>
+					)
+				} else {
+					return '送信'
+				}
+			})()}
+		</Button>
+	</Center>
+    </>
+  )
+}
