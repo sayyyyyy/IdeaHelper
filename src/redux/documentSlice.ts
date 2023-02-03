@@ -1,16 +1,16 @@
+// ライブラリインポート
 import { createSlice } from '@reduxjs/toolkit';
 
 export const documentSlice = createSlice({
-  name: 'document',
-  initialState: {
-    document: [{}],
-  },
-  reducers: {
-    setDocument: (state, action) => {
-        console.log(action.payload)
-      state.document = action.payload;
-    },
-  },
+	name: 'document',
+	initialState: {
+		document: [{}],
+	},
+	reducers: {
+		setDocument: (state, action) => {
+			state.document = action.payload;
+		},
+	},
 });
 
 //アクションの設定

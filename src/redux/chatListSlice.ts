@@ -1,15 +1,16 @@
+// ライブラリインポート
 import { createSlice } from '@reduxjs/toolkit';
 
 export const chatListSlice = createSlice({
-  name: 'chatList',
-  initialState: {
-    chatList: [],
-  },
-  reducers: {
-    setChatList: (state, action) => {
-      state.chatList = action.payload;
-    },
-  },
+	name: 'chatList',
+	initialState: {
+		chatList: [],
+	},
+	reducers: {
+		setChatList: (state, action) => {
+		state.chatList = action.payload;
+		},
+	},
 });
 
 //アクションの設定
