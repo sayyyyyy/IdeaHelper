@@ -15,15 +15,16 @@ const HEADER_HEIGHT = 100;
 
 const useStyles = createStyles((theme) => ({
   pc:{
-    [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
-		  display:"block"
+    [`@media (max-width: 2000px)`]: {
+		  display:"block",
+      // marginTop:100
 	  },
 	  '@media (max-width:800px)': {
       display: 'none',
 	  },
   },
   sp:{
-    [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
+    [`@media (max-width: 2000px)`]: {
       display: 'none',
 	  },
 	  '@media (max-width:800px)': {
@@ -33,6 +34,15 @@ const useStyles = createStyles((theme) => ({
 	  },
   },
   spContainer:{
+    paddingTop: "calc(var(--mantine-header-height, 0px) + 16px)",
+    [`@media (max-width: 2000px)`]: {
+      paddingTop: "-calc(var(--mantine-header-height, 0px) + 16px)",
+	  },
+    '@media (max-width:800px)': {
+      display:"block",
+      marginLeft:16,
+      marginRight:16
+	  },
   },
   header: {
     backgroundColor: theme.fn.variant({ variant: 'filled', color: "yellow" }).background,
@@ -40,7 +50,15 @@ const useStyles = createStyles((theme) => ({
     height: HEADER_HEIGHT,
     maxHeight: 100,
     marginLeft:-16,
-    marginRight:-16
+    marginRight:-16,
+    [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
+      display: 'none',
+	  },
+	  '@media (max-width:800px)': {
+      display:"block",
+      // marginLeft:16,
+      // marginRight:16
+	  },
   },
 }));
 
@@ -57,7 +75,6 @@ export default function App(props: AppProps) {
       <Head>
         <title>Idea Helper</title>
       </Head>
-
 
       <div className={classes.pc}>
         <Provider store={store}>
@@ -77,7 +94,7 @@ export default function App(props: AppProps) {
             }}
           >
             <AppShell padding="md" 
-              navbar={<Navbar width={{base:200}} style={{backgroundColor:"#FFFEF9"}}><Sidebar></Sidebar></Navbar> } 
+              navbar={<Navbar width={{base:200}} style={{backgroundColor:"#FFFEF9"}} className={classes.spContainer}><Sidebar></Sidebar></Navbar> } 
              
             >
               <Component {...pageProps} />
@@ -85,7 +102,7 @@ export default function App(props: AppProps) {
           </MantineProvider>
         </Provider>
         {/* <div className={classes.container} /> */}
-        </div>
+      </div>
 
         <div className={classes.sp}>
         <Header height={56} className={classes.header} mb={120}></Header>

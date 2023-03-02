@@ -5,13 +5,29 @@ import { Button, Navbar } from "@mantine/core";
 // 状態管理
 import { useDispatch, useSelector } from "react-redux";
 import { selectIdea } from "@/redux/ideaSlice";
+import { createStyles} from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+    sidebar:{
+        marginTop:-70,
+        [`@media (max-width: 2000px)`]: {
+            // display:"block",
+        // marginTop:100
+        },
+        '@media (max-width:800px)': {
+        // display: 'none',
+        },
+    },
+}));
 
 
 export const Sidebar = () => {
     const idea = useSelector(selectIdea);
+    const { classes } = useStyles();
     
     return(
         <>
+        <div className={classes.sidebar}> 
             <Navbar.Section  mt="md" >
                 <img src='app_icon.png' />
             </Navbar.Section>
@@ -28,6 +44,7 @@ export const Sidebar = () => {
                     ＋
                 </Button>
             </Navbar.Section>
+            </div>
         </>
     )
 }
