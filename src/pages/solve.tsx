@@ -59,7 +59,7 @@ const useStyles = createStyles((theme) => ({
 		'@media (max-width:1000px)': {
 			// display: 'none',
 			width: 180,
-    		height: 200
+    		height: 250
 		},
 		'@media (max-width:800px)': {
 		// display: 'none',
