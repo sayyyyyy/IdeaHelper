@@ -12,7 +12,7 @@ const Stepbar = () => {
 	return (
 		<>
 			<div className="mt-5">
-				<Stepper color="yellow" active={selector} onStepClick={selector} breakpoint="sm">
+				<Stepper color="yellow" active={selector} onStepClick={selector} >
 					<Stepper.Step label="課題"></Stepper.Step>
 					<Stepper.Step label="解決策の提案" ></Stepper.Step>
 					<Stepper.Step label="ドキュメント化" ></Stepper.Step>

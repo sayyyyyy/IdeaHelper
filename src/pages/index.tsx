@@ -10,10 +10,29 @@ import { counterSlice } from "../redux/counterSlice";
 import { selectIdeaList, setIdeaList } from "../redux/idealistSlice";
 import { selectTitleList,addTitleList } from '@/redux/titleListSlice'
 
+import { createStyles } from '@mantine/core';
+
 // コンポーネントインポート
 import Stepbar from '@/components/stepbar'
 
 const inter = Inter({ subsets: ['latin'] })
+
+const useStyles = createStyles((theme) => ({
+	container: {
+	  height: 50,
+	  backgroundColor: theme.colors.blue[6],
+  
+	  // Media query with value from theme
+	  [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
+		backgroundColor: theme.colors.pink[6],
+	  },
+  
+	  // Static media query
+	  '@media (max-width: 500px)': {
+		backgroundColor: theme.colors.orange[6],
+	  },
+	},
+  }));
 
 export default function Home() {
 	const dispatch = useDispatch();
@@ -25,6 +44,8 @@ export default function Home() {
 	const [isLoading, setLoading] = useState(false)
 
 	const router = useRouter()
+
+	const { classes } = useStyles();
 	
 
 	async function generateIdea(event: any) {
@@ -128,6 +149,7 @@ export default function Home() {
 				<input autoComplete='off' className=" mt-1 shadow appearance-none border rounded h-14 w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" value={text} onChange={(event)=>setText(event.target.value)}/>
 			</div>
 
+
 			<Group position="center" mt={100}>
 				<Button onClick={generateIdea} variant="filled" color="yellow" size="md">
 					解決策の提案
@@ -136,13 +158,13 @@ export default function Home() {
 			
 			<h2 className='flex justify-center mt-24 font-bold text-3xl'>課題なしで生成</h2>
 			<div className='flex justify-center mt-4'>
-				<Button className='m-4' color="yellow" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('面白い')}}>
+				<Button className='m-4' color="yellow" variant="light" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('面白い')}}>
 					面白い
 				</Button>
-				<Button className='m-4' color="yellow" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('便利')}}>
+				<Button className='m-4' color="yellow" variant="light" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('便利')}}>
 					便利
 				</Button>
-				<Button className='m-4' color="yellow" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('使いやすい')}}>
+				<Button className='m-4' color="yellow" variant="light" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('使いやすい')}}>
 					使いやすい
 				</Button>
 			</div>
