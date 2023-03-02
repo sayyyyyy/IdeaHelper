@@ -1,7 +1,7 @@
 // ライブラリインポート
 import { useState } from 'react';
 import { useRouter } from "next/router";
-import { Textarea, Avatar, Button, ScrollArea, Group, Text, Paper ,Center, LoadingOverlay  } from '@mantine/core';
+import { createStyles,Textarea, Avatar, Button, ScrollArea, Group, Text, Paper ,Center, LoadingOverlay,Header} from '@mantine/core';
 import { FileText } from 'tabler-icons-react';
 
 // 環境変数
@@ -9,6 +9,76 @@ import { useDispatch, useSelector } from "react-redux";
 import { counterSlice, selectCount } from "../redux/counterSlice";
 import { selectIdea } from '@/redux/ideaSlice';
 import { setChatList, selectChatList } from '@/redux/chatListSlice';
+
+const useStyles = createStyles((theme) => ({
+	none: {
+		display:"none",
+		backgroundColor: theme.fn.variant({ variant: 'filled', color: "yellow" }).background,
+		borderBottom: 0,
+		height: 100,
+		maxHeight: 100,
+		marginLeft:-16,
+		marginRight:-16,
+	},
+	chatHeaderBackground:{
+		position:"fixed" ,
+		backgroundColor:"#FFFFFF",
+		width:"100%",
+		height:120 ,
+		zIndex:1 ,
+		marginTop:-20
+	},
+	chatHeader:{
+		backgroundColor:"#FCC419",
+		width:"100%",
+		display:"flex",
+		height:80,
+		position:"fixed",
+		zIndex:2,
+		marginTop:-10,
+		[`@media (max-width:2000px)`]: {
+			// display: 'none',
+			width:"90",
+		},
+		[`@media (max-width:1800px)`]: {
+			// display: 'none',
+			width:"88%",
+		},
+		[`@media (max-width:1600px)`]: {
+			// display: 'none',
+			width:"86%",
+		},
+		[`@media (max-width:1400px)`]: {
+			// display: 'none',
+			width:"84%",
+		},
+		[`@media (max-width:1200px)`]: {
+			// display: 'none',
+			width:"82%",
+		},
+		'@media (max-width:1000px)': {
+			width:"80%",
+		},
+		'@media (max-width:800px)': {
+			width:"100%",
+			fontSize:"8px"
+		},
+	},
+	backButton:{
+		marginLeft: 20,
+		position:"absolute", 
+		left: 0,
+		width: "64px",
+	},
+	documentButton:{
+		backgroundColor:"#FCC419",
+		color:"white" ,
+		position:"absolute", 
+		right: 0,
+		marginRight: 30
+	}
+
+}))
 
 export default function Top() {
 	// 環境変数
@@ -22,6 +92,7 @@ export default function Top() {
     const [isLoading, setLoading] = useState(false)
 
 	const router = useRouter()
+	const { classes } = useStyles();
 
     const moveBack=()=>{
       	router.push("/solve")
@@ -63,13 +134,14 @@ export default function Top() {
    
     return (
     <>
+	<Header height={56} className={classes.none} mb={120}></Header>
 	{/* タイトル */}
-	<div style={{position:"fixed" ,backgroundColor:"#FFFFFF",width:"100%",height:120 ,zIndex:1 ,marginTop:-20}}>
-		<header style={{backgroundColor:"#FCC419",width:"86%",display:"flex",height:80,position:"fixed",zIndex:2,marginTop:20}}>
+	<div className={classes.chatHeaderBackground}>
+		<header className={classes.chatHeader}>
 			<Center style={{width:"100%"}}>
-				<Button variant="light" color="yellow" size="md" onClick={moveBack} style={{marginLeft: 20,marginRight:"30%",position:"absolute", left: 0}}> ＜ </Button>
+				<Button variant="light" color="yellow" size="md" onClick={moveBack}  className={classes.backButton}> ＜ </Button>
 				<h1 className='text-white font-bold text-center overflow-x-scroll'>{idea}</h1>
-				<button onClick={moveDucumet} style={{backgroundColor:"#FCC419",color:"white" ,position:"absolute",right: 0,marginRight: 30}}>
+				<button onClick={moveDucumet} className={classes.documentButton}>
 					<FileText
 						size={52}
 						strokeWidth={2}

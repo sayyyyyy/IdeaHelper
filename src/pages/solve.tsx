@@ -1,6 +1,6 @@
 // ライブラリインポート
 import { Inter } from '@next/font/google'
-import { Button, Group, Card,Text, Center } from '@mantine/core';
+import { Button, Group, Card,Text, Center,Header } from '@mantine/core';
 import { useRouter } from "next/router";
 
 // コンポーネントインポート
@@ -15,6 +15,22 @@ import { createStyles} from '@mantine/core';
 
 const inter = Inter({ subsets: ['latin'] })
 const useStyles = createStyles((theme) => ({
+	header: {
+		backgroundColor: theme.fn.variant({ variant: 'filled', color: "yellow" }).background,
+		borderBottom: 0,
+		height: 100,
+		maxHeight: 100,
+		marginLeft:-16,
+		marginRight:-16,
+		[`@media (max-width:2000px)`]: {
+		  	display: 'none',
+		},
+		'@media (max-width:800px)': {
+		  	display:"block",
+		  	// marginLeft:16,
+		  	// marginRight:16
+		},
+	  },
 	cards:{
 		[`@media (max-width: 2000px)`]: {
 			// width: 280,
@@ -95,6 +111,7 @@ export default function Solve() {
 
 	return (
 		<>
+		<Header height={56} className={classes.header} mb={120}></Header>
 		<Stepbar />
 
 		<div className={classes.cards} >

@@ -105,7 +105,6 @@ export default function App(props: AppProps) {
       </div>
 
         <div className={classes.sp}>
-        <Header height={56} className={classes.header} mb={120}></Header>
           <Provider store={store}>
             <MantineProvider
               withGlobalStyles

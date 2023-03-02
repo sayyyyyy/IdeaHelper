@@ -8,7 +8,7 @@ import { createStyles} from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
     stepbar:{
-        marginTop:-30,
+        marginTop:-10,
         [`@media (max-width: 2000px)`]: {
             // display:"block",
         // marginTop:100

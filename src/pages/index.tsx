@@ -1,7 +1,7 @@
 // ライブラリインポート
 import { Inter } from '@next/font/google'
 import { useState } from 'react'
-import { Button, Group, LoadingOverlay } from '@mantine/core';
+import { Button, Group, LoadingOverlay ,Header,createStyles} from '@mantine/core';
 import { useRouter } from "next/router";
 
 // 環境変数
@@ -9,8 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { counterSlice } from "../redux/counterSlice";
 import { selectIdeaList, setIdeaList } from "../redux/idealistSlice";
 import { selectTitleList,addTitleList } from '@/redux/titleListSlice'
-
-import { createStyles } from '@mantine/core';
 
 // コンポーネントインポート
 import Stepbar from '@/components/stepbar'
@@ -32,6 +30,22 @@ const useStyles = createStyles((theme) => ({
 		backgroundColor: theme.colors.orange[6],
 	  },
 	},
+	header: {
+		backgroundColor: theme.fn.variant({ variant: 'filled', color: "yellow" }).background,
+		borderBottom: 0,
+		height: 100,
+		maxHeight: 100,
+		marginLeft:-16,
+		marginRight:-16,
+		[`@media (max-width:2000px)`]: {
+		  display: 'none',
+		  },
+		  '@media (max-width:800px)': {
+		  display:"block",
+		  // marginLeft:16,
+		  // marginRight:16
+		  },
+	  },
   }));
 
 export default function Home() {
@@ -142,6 +156,8 @@ export default function Home() {
 					)
 				}
 			})()}
+			 <Header height={56} className={classes.header} mb={120}></Header>
+			
 			<Stepbar />
 			<br />
 			<h1 className ="flex justify-center mt-20 font-bold" >あなたが解決したい課題を教えてください</h1>
