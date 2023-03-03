@@ -1,7 +1,7 @@
 // ライブラリインポート
 import { Inter } from '@next/font/google'
 import { useState } from 'react'
-import { Button, Group, LoadingOverlay } from '@mantine/core';
+import { Button, Group, LoadingOverlay ,Header,createStyles,Center} from '@mantine/core';
 import { useRouter } from "next/router";
 
 // 環境変数
@@ -15,6 +15,75 @@ import Stepbar from '@/components/stepbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const useStyles = createStyles((theme) => ({
+	container: {
+	  height: 50,
+	  backgroundColor: theme.colors.blue[6],
+  
+	  // Media query with value from theme
+	  [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
+		backgroundColor: theme.colors.pink[6],
+	  },
+  
+	  // Static media query
+	  '@media (max-width: 500px)': {
+		backgroundColor: theme.colors.orange[6],
+	  },
+	},
+	header: {
+		backgroundColor: theme.fn.variant({ variant: 'filled', color: "yellow" }).background,
+		borderBottom: 0,
+		marginLeft:-16,
+		marginRight:-16,
+		marginBottom:0,
+		[`@media (max-width:2000px)`]: {
+		  display: 'none',
+		},
+		'@media (max-width:800px)': {
+		  display:"block",
+		  // marginLeft:16,
+		  // marginRight:16
+		},
+	  },
+	headerImg:{
+		width:150,
+		marginTop:5
+	},
+	title:{
+		dispay:"flex" ,
+		justifyContent:"center",
+		textAlign:"center",
+		marginTop:"20",
+		fontWeight:"bold",
+		['@media (max-width:800px)']: {
+			fontSize: "1em",
+		},
+	},
+	text:{
+		dispay:"flex" ,
+		justifyContent:"center",
+		textAlign:"center",
+		marginTop:"24",
+		fontWeight:"bold",
+		['@media (max-width:800px)']: {
+			fontSize: "1em",
+		},
+	},
+	button:{
+		margin:4,
+		marginLeft:20,
+		marginRight:20,
+		['@media (max-width:800px)']: {
+			// fontSize: "1em",
+			height: 32,
+			fontSize:12,
+			paddingLeft:13,
+			paddingRight:13,
+
+		},
+	}
+  }));
+
 export default function Home() {
 	const dispatch = useDispatch();
 	const { increment,decrement } = counterSlice.actions;
@@ -25,6 +94,8 @@ export default function Home() {
 	const [isLoading, setLoading] = useState(false)
 
 	const router = useRouter()
+
+	const { classes } = useStyles();
 	
 
 	async function generateIdea(event: any) {
@@ -121,28 +192,33 @@ export default function Home() {
 					)
 				}
 			})()}
+			 <Header height={56} className={classes.header} mb={120}>
+			 	<Center><img src='ideaHelperLogo.png' className={classes.headerImg}/></Center>
+			 </Header>
+			
 			<Stepbar />
 			<br />
-			<h1 className ="flex justify-center mt-20 font-bold" >あなたが解決したい課題を教えてください</h1>
+			<h1 className={classes.title} >あなたが解決したい課題を教えてください</h1>
 			<div className="flex justify-center mt-5">
 				<input autoComplete='off' className=" mt-1 shadow appearance-none border rounded h-14 w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" value={text} onChange={(event)=>setText(event.target.value)}/>
 			</div>
 
-			<Group position="center" mt={100}>
+
+			<Group position="center" mt={50} mb={100}>
 				<Button onClick={generateIdea} variant="filled" color="yellow" size="md">
 					解決策の提案
 				</Button>
 			</Group>
 			
-			<h2 className='flex justify-center mt-24 font-bold text-3xl'>課題なしで生成</h2>
+			<h2 className={classes.text}>課題なしで生成</h2>
 			<div className='flex justify-center mt-4'>
-				<Button className='m-4' color="yellow" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('面白い')}}>
+				<Button className={classes.button} color="yellow" variant="light" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('面白い')}}>
 					面白い
 				</Button>
-				<Button className='m-4' color="yellow" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('便利')}}>
+				<Button className={classes.button}  color="yellow" variant="light" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('便利')}}>
 					便利
 				</Button>
-				<Button className='m-4' color="yellow" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('使いやすい')}}>
+				<Button className={classes.button} color="yellow" variant="light" radius="lg" size="lg" onClick={() => {generateIdeaWithoutProblem('使いやすい')}}>
 					使いやすい
 				</Button>
 			</div>
