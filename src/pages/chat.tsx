@@ -1,7 +1,7 @@
 // ライブラリインポート
 import { useState } from 'react';
 import { useRouter } from "next/router";
-import { Textarea, Avatar, Button, ScrollArea, Group, Text, Paper ,Center, LoadingOverlay  } from '@mantine/core';
+import { createStyles,Textarea, Avatar, Button, ScrollArea, Group, Text, Paper ,Center, LoadingOverlay,Header} from '@mantine/core';
 import { FileText } from 'tabler-icons-react';
 
 // 環境変数
@@ -9,6 +9,119 @@ import { useDispatch, useSelector } from "react-redux";
 import { counterSlice, selectCount } from "../redux/counterSlice";
 import { selectIdea } from '@/redux/ideaSlice';
 import { setChatList, selectChatList } from '@/redux/chatListSlice';
+
+const useStyles = createStyles((theme) => ({
+	none: {
+		display:"none",
+		backgroundColor: theme.fn.variant({ variant: 'filled', color: "yellow" }).background,
+		borderBottom: 0,
+		height: 100,
+		maxHeight: 100,
+		marginLeft:-16,
+		marginRight:-16,
+	},
+	chatHeaderBackground:{
+		position:"fixed" ,
+		backgroundColor:"#FFFFFF",
+		width:"100%",
+		height:120 ,
+		zIndex:1 ,
+		marginTop:-20,
+		'@media (max-width:800px)': {
+			height:60 ,
+		},
+	},
+	chatHeader:{
+		backgroundColor:"#FCC419",
+		width:"100%",
+		display:"flex",
+		height:80,
+		position:"fixed",
+		zIndex:2,
+		marginTop:-50,
+		paddingLeft:5,
+		[`@media (max-width:2000px)`]: {
+			// display: 'none',
+			width:"89%",
+		},
+		[`@media (max-width:1800px)`]: {
+			// display: 'none',
+			width:"88%",
+		},
+		[`@media (max-width:1600px)`]: {
+			// display: 'none',
+			width:"86%",
+			fontSize:"14px"
+		},
+		[`@media (max-width:1400px)`]: {
+			// display: 'none',
+			width:"84%",
+			fontSize:"12px"
+		},
+		[`@media (max-width:1200px)`]: {
+			// display: 'none',
+			width:"82%",
+			fontSize:"12px"
+		},
+		'@media (max-width:1000px)': {
+			width:"80%",
+			fontSize:"10px"
+		},
+		'@media (max-width:800px)': {
+			width:"100%",
+			fontSize:"8px",
+			marginTop: "-80px"
+		},
+		'@media (max-width:400px)': {
+			fontSize:"3px"
+			
+		},
+	},
+	backButton:{
+		marginLeft: 20,
+		position:"absolute", 
+		left: 0,
+		width: "64px",
+	},
+	documentButton:{
+		backgroundColor:"#FCC419",
+		color:"white" ,
+		position:"absolute", 
+		right: 0,
+		marginRight: 30
+	},
+	chatHeaderTitle:{
+		color:"white",
+		fontWeight:"bold",
+		textAlign:"center",
+		width:"70%",
+		paddingTop:"20px",
+		paddingBottom:"20px",
+		// overflow-x-scroll
+		'@media (max-width:1500px)': {
+			width:"70%"
+		},
+		'@media (max-width:1000px)': {
+			width:"70%"
+		},
+		'@media (max-width:800px)': {
+			width:"70%"
+		},
+		'@media (max-width:600px)': {
+			width:"55%"
+		},
+		'@media (max-width:400px)': {
+			width:"40%"
+		},
+	},
+	scrollArea:{
+		marginTop:"50px",
+		height:"70%",
+		'@media (max-width:800px)': {
+			marginTop:"100px"
+		},
+	}
+}))
 
 export default function Top() {
 	// 環境変数
@@ -22,6 +135,7 @@ export default function Top() {
     const [isLoading, setLoading] = useState(false)
 
 	const router = useRouter()
+	const { classes } = useStyles();
 
     const moveBack=()=>{
       	router.push("/solve")
@@ -63,13 +177,14 @@ export default function Top() {
    
     return (
     <>
+	<Header height={56} className={classes.none} mb={120}> </Header>
 	{/* タイトル */}
-	<div style={{position:"fixed" ,backgroundColor:"#FFFFFF",width:"100%",height:120 ,zIndex:1 ,marginTop:-20}}>
-		<header style={{backgroundColor:"#FCC419",width:"86%",display:"flex",height:80,position:"fixed",zIndex:2,marginTop:20}}>
+	<div className={classes.chatHeaderBackground}>
+		<header className={classes.chatHeader}>
 			<Center style={{width:"100%"}}>
-				<Button variant="light" color="yellow" size="md" onClick={moveBack} style={{marginLeft: 20,marginRight:"30%",position:"absolute", left: 0}}> ＜ </Button>
-				<h1 className='text-white font-bold text-center overflow-x-scroll'>{idea}</h1>
-				<button onClick={moveDucumet} style={{backgroundColor:"#FCC419",color:"white" ,position:"absolute",right: 0,marginRight: 30}}>
+				<Button variant="light" color="yellow" size="md" onClick={moveBack}  className={classes.backButton}> ＜ </Button>
+				<h1 className={classes.chatHeaderTitle}>{idea}</h1>
+				<button onClick={moveDucumet} className={classes.documentButton}>
 					<FileText
 						size={52}
 						strokeWidth={2}
@@ -80,13 +195,13 @@ export default function Top() {
     </div>
       
 	{/* チャット部分 */}
-	<ScrollArea style={{ height: "70%",marginTop:50}}>
+	<ScrollArea className={classes.scrollArea}>
 	{
 		chatList.map((chat: {sender: string, data: string}) =>
 			{if (chat.sender == 'user') {
 				return (
 					<>
-					<div key={chat.data}>
+					<div key={chat.data} className={classes.scrollArea}>
 						<Group style={{ marginTop: 50 ,marginBottom:50,display:'flex',justifyContent: "flex-end",color:"pink"}}>
 						<div style={{ width: 400,backgroundColor:"yellow"}} >
 							<Paper shadow="xs" p="md" color="yellow">

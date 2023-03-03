@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 import { Copy,Code,FileDownload } from 'tabler-icons-react'
-import { Button, Text, Center, Grid, Card, LoadingOverlay, Popover } from '@mantine/core'
+import { Button, Text, Center, Grid, Card, LoadingOverlay, Popover,Header,createStyles  } from '@mantine/core'
 
 // 状態管理
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,6 +13,30 @@ import { selectChatList } from '@/redux/chatListSlice'
 
 // コンポーネントインポート
 import Stepbar from '@/components/stepbar'
+
+const useStyles = createStyles((theme) => ({
+	header: {
+		backgroundColor: theme.fn.variant({ variant: 'filled', color: "yellow" }).background,
+		borderBottom: 0,
+		height: 56,
+		maxHeight: 100,
+		marginLeft:-16,
+		marginRight:-16,
+		marginBottom:0,
+		[`@media (max-width:2000px)`]: {
+		  	display: 'none',
+		},
+		'@media (max-width:800px)': {
+		  	display:"block",
+		  	// marginLeft:16,
+		  	// marginRight:16
+		},
+	},
+	headerImg:{
+		width:150,
+		marginTop:5
+	},
+}));
 
 export default function Document() {
     // 状態管理
@@ -24,6 +48,8 @@ export default function Document() {
     const [isLoading, setLoading] = useState(false)
     const [copy, setCopy] = useState(false)
     const [ existDocument, setexistDocument ] = useState(false)
+
+    const { classes } = useStyles();
 
     const questionList = [
         {question: `${idea}のアプリ名を正確な文章で提案してください。`, questionText: 'アプリ名案'},
@@ -137,6 +163,9 @@ export default function Document() {
 
     return (
         <>
+            <Header height={56} className={classes.header} mb={120}>
+			    <Center><img src='ideaHelperLogo.png' className={classes.headerImg}/></Center>
+		    </Header>
             <Stepbar />
             
             {/* ローディングDOM */}
