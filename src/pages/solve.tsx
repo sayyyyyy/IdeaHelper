@@ -18,10 +18,11 @@ const useStyles = createStyles((theme) => ({
 	header: {
 		backgroundColor: theme.fn.variant({ variant: 'filled', color: "yellow" }).background,
 		borderBottom: 0,
-		height: 100,
+		height: 56,
 		maxHeight: 100,
 		marginLeft:-16,
 		marginRight:-16,
+		marginBottom:0,
 		[`@media (max-width:2000px)`]: {
 		  	display: 'none',
 		},
@@ -30,7 +31,11 @@ const useStyles = createStyles((theme) => ({
 		  	// marginLeft:16,
 		  	// marginRight:16
 		},
-	  },
+	},
+	headerImg:{
+		width:150,
+		marginTop:5
+	},
 	cards:{
 		[`@media (max-width: 2000px)`]: {
 			// width: 280,
@@ -111,7 +116,9 @@ export default function Solve() {
 
 	return (
 		<>
-		<Header height={56} className={classes.header} mb={120}></Header>
+		<Header height={56} className={classes.header} mb={120}>
+			<Center><img src='ideaHelperLogo.png' className={classes.headerImg}/></Center>
+		</Header>
 		<Stepbar />
 
 		<div className={classes.cards} >
