@@ -17,6 +17,7 @@ const useStyles = createStyles((theme) => ({
         // display: 'none',
         },
     },
+	
 }));
 
 const Stepbar = () => {
@@ -28,8 +29,8 @@ const Stepbar = () => {
 		
 		<>
 			<div className={classes.stepbar}>
-				<Stepper color="yellow" active={selector} onStepClick={selector} >
-					<Stepper.Step label="課題"></Stepper.Step>
+				<Stepper size="xs" iconSize={30} color="yellow" active={selector} onStepClick={selector} >
+					<Stepper.Step label="課題" ></Stepper.Step>
 					<Stepper.Step label="解決策の提案" ></Stepper.Step>
 					<Stepper.Step label="ドキュメント化" ></Stepper.Step>
 				</Stepper>
