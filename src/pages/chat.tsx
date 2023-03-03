@@ -26,7 +26,10 @@ const useStyles = createStyles((theme) => ({
 		width:"100%",
 		height:120 ,
 		zIndex:1 ,
-		marginTop:-20
+		marginTop:-20,
+		'@media (max-width:800px)': {
+			height:60 ,
+		},
 	},
 	chatHeader:{
 		backgroundColor:"#FCC419",
@@ -35,10 +38,11 @@ const useStyles = createStyles((theme) => ({
 		height:80,
 		position:"fixed",
 		zIndex:2,
-		marginTop:-10,
+		marginTop:-50,
+		paddingLeft:5,
 		[`@media (max-width:2000px)`]: {
 			// display: 'none',
-			width:"90",
+			width:"89%",
 		},
 		[`@media (max-width:1800px)`]: {
 			// display: 'none',
@@ -47,21 +51,30 @@ const useStyles = createStyles((theme) => ({
 		[`@media (max-width:1600px)`]: {
 			// display: 'none',
 			width:"86%",
+			fontSize:"14px"
 		},
 		[`@media (max-width:1400px)`]: {
 			// display: 'none',
 			width:"84%",
+			fontSize:"12px"
 		},
 		[`@media (max-width:1200px)`]: {
 			// display: 'none',
 			width:"82%",
+			fontSize:"12px"
 		},
 		'@media (max-width:1000px)': {
 			width:"80%",
+			fontSize:"10px"
 		},
 		'@media (max-width:800px)': {
 			width:"100%",
-			fontSize:"8px"
+			fontSize:"8px",
+			marginTop: "-80px"
+		},
+		'@media (max-width:400px)': {
+			fontSize:"3px"
+			
 		},
 	},
 	backButton:{
@@ -76,8 +89,38 @@ const useStyles = createStyles((theme) => ({
 		position:"absolute", 
 		right: 0,
 		marginRight: 30
+	},
+	chatHeaderTitle:{
+		color:"white",
+		fontWeight:"bold",
+		textAlign:"center",
+		width:"70%",
+		paddingTop:"20px",
+		paddingBottom:"20px",
+		// overflow-x-scroll
+		'@media (max-width:1500px)': {
+			width:"70%"
+		},
+		'@media (max-width:1000px)': {
+			width:"70%"
+		},
+		'@media (max-width:800px)': {
+			width:"70%"
+		},
+		'@media (max-width:600px)': {
+			width:"55%"
+		},
+		'@media (max-width:400px)': {
+			width:"40%"
+		},
+	},
+	scrollArea:{
+		marginTop:"50px",
+		height:"70%",
+		'@media (max-width:800px)': {
+			marginTop:"100px"
+		},
 	}
-
 }))
 
 export default function Top() {
@@ -140,7 +183,7 @@ export default function Top() {
 		<header className={classes.chatHeader}>
 			<Center style={{width:"100%"}}>
 				<Button variant="light" color="yellow" size="md" onClick={moveBack}  className={classes.backButton}> ＜ </Button>
-				<h1 className='text-white font-bold text-center overflow-x-scroll'>{idea}</h1>
+				<h1 className={classes.chatHeaderTitle}>{idea}</h1>
 				<button onClick={moveDucumet} className={classes.documentButton}>
 					<FileText
 						size={52}
@@ -152,13 +195,13 @@ export default function Top() {
     </div>
       
 	{/* チャット部分 */}
-	<ScrollArea style={{ height: "70%",marginTop:50}}>
+	<ScrollArea className={classes.scrollArea}>
 	{
 		chatList.map((chat: {sender: string, data: string}) =>
 			{if (chat.sender == 'user') {
 				return (
 					<>
-					<div key={chat.data}>
+					<div key={chat.data} className={classes.scrollArea}>
 						<Group style={{ marginTop: 50 ,marginBottom:50,display:'flex',justifyContent: "flex-end",color:"pink"}}>
 						<div style={{ width: 400,backgroundColor:"yellow"}} >
 							<Paper shadow="xs" p="md" color="yellow">

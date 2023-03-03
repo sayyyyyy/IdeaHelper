@@ -35,6 +35,7 @@ const useStyles = createStyles((theme) => ({
   },
   spContainer:{
     paddingTop: "calc(var(--mantine-header-height, 0px) + 16px)",
+    paddingRight:0,
     [`@media (max-width: 2000px)`]: {
       paddingTop: "-calc(var(--mantine-header-height, 0px) + 16px)",
 	  },
