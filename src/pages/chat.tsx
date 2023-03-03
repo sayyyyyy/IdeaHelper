@@ -177,7 +177,7 @@ export default function Top() {
    
     return (
     <>
-	<Header height={56} className={classes.none} mb={120}></Header>
+	<Header height={56} className={classes.none} mb={120}> </Header>
 	{/* タイトル */}
 	<div className={classes.chatHeaderBackground}>
 		<header className={classes.chatHeader}>
