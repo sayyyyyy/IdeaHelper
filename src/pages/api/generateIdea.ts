@@ -3,6 +3,28 @@ import { callOpenAI } from "@/scripts/callOpenAI";
 
 export default async function (req: any, res: any) {
 	const problem = req.body.problem || '';
+
+  const body = JSON.stringify({
+    model: "gpt-3.5-turbo",
+    messages: [
+        {role: 'system', content: `
+        これからある問題を投げかけます。
+その問題を解決するアプリのアイデアを3つレスポンスとして返してください。
+レスポンスは「アイデア|アイデア|アイデア」のように|で区切って返してください
+        `},
+
+        {role: 'user', content: `
+ストレスを解消したい。
+        `},
+
+        {role: 'assistant', content: `
+ストレス解消のためのレラクゼーションアプリ|ストレスを解消するためのヨガアプリ|ストレスを解消するためのメンタルヘルスアプリ
+        `},
+        
+        {role: 'user', content: problem}
+    ]
+});
+
 	if (problem.trim().length === 0) {
 		res.status(400).json({
 		error: {
@@ -13,7 +35,7 @@ export default async function (req: any, res: any) {
 	}
 
 	try {
-		const completion = await callOpenAI(`${problem}を解決するアプリのアイデアを{{'idea': value}, {'idea': value}, {'idea': value}}形式のjsonで3つ渡してください。`)
+		const completion = await callOpenAI(body)
 		if (!completion) {
 			res.status(500).json({
 				error: {

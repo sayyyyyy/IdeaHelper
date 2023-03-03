@@ -119,10 +119,10 @@ export default function Home() {
 			}
 
 			// 取得データの整形
-			const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '').split(',')
-			const changeArray = []
-			for (const formatIdea of formatIdeaList) {
-				changeArray.push(JSON.parse(formatIdea).idea)
+			const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '')
+			const changeArray = formatIdeaList.split('|')
+			if (changeArray.length !== 3) {
+				generateIdea(event)
 			}
 
 			dispatch(setIdeaList(changeArray))
@@ -159,10 +159,10 @@ export default function Home() {
 			}
 
 			// 取得データの整形
-			const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '').split(',')
-			const changeArray = []
-			for (const formatIdea of formatIdeaList) {
-				changeArray.push(JSON.parse(formatIdea).idea)
+			const formatIdeaList = data.result.replaceAll('\n', '').replaceAll('。', '').replaceAll('\\', '')
+			const changeArray = formatIdeaList.split('|')
+			if (changeArray.length !== 3) {
+				generateIdeaWithoutProblem(junre)
 			}
 
 			dispatch(setIdeaList(changeArray))
@@ -173,7 +173,7 @@ export default function Home() {
 		} catch(error: any) {
 			// 毎回正しい形式でレスポンスが返ってくる訳ではないので、再起している
 			errorCount++
-			generateIdea(junre)
+			generateIdeaWithoutProblem(junre)
 			setLoading(false)
 		}
 	}

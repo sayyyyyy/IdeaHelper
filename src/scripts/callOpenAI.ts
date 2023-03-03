@@ -6,17 +6,23 @@ const configuration = new Configuration({
   
 const openai = new OpenAIApi(configuration);
 
-export const callOpenAI = async (prompt: string) => {
+//////GPT-3.5モデル///////////
+export const callOpenAI = async (body: any) => {
     if (!configuration.apiKey) {
         return '';
     }
 
-    const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        max_tokens: 4000,
-        prompt: prompt,
-        temperature: 0.6,
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${configuration.apiKey}`,
+        },
+        body
     });
-    console.log(completion.data.choices[0].text)
-    return completion.data.choices[0].text
+    const data = await res.json();
+    console.log(data.choices[0].message.content);
+    // console.log(data.choices[0].text);
+    const choice = 0;
+    return data.choices[choice].message.content;
 }

@@ -54,8 +54,8 @@ export default function Document() {
     const questionList = [
         {question: `${idea}のアプリ名を正確な文章で提案してください。`, questionText: 'アプリ名案'},
         {question: `${idea}のターゲットを正確な文章で提案してください。`, questionText: 'ターゲット案'},
-        {question: `${idea}の機能一覧を教えてください。`, questionText: '機能一覧案'},
-        {question: `${idea}の画面一覧を教えてください。`, questionText: '画面一覧案'},
+        {question: `${idea}の機能一覧を提案してください。`, questionText: '機能一覧案'},
+        {question: `${idea}の画面一覧を提案してください。`, questionText: '画面一覧案'},
     ]
 
     async function createDocument() {
